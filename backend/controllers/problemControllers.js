@@ -1,7 +1,7 @@
 const Problem = require("../models/Problem");
 module.exports.addProblem = async (req, res) => {
   const { difficulty, desc, link, tag } = req.body;
-  const x = await Problem.create({ difficulty, desc, link });
+  const x = await Problem.create({ difficulty, desc, link, tag });
   if (x) {
     res.status(201).json({
       _id: x._id,

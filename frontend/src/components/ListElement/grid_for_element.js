@@ -10,8 +10,10 @@ import Favorite from "@mui/icons-material/Favorite";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
 
 export default function Grid(props) {
+  const [arr, setArr] = useState([]);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
+  // const x = props.l;
+  // console.log(x);
   const [badge, setBadge] = useState("sucess");
 
   const func = (str) => {
@@ -20,22 +22,41 @@ export default function Grid(props) {
     else setBadge("success");
   };
 
+  const fetchProblems = async () => {
+    try {
+      // const { res } = await axios.get("/api/getProblems");
+      const { data } = await axios.get("/api/getProblems");
+      //console.log(data);
+      setArr(data);
+      //console.log(arr);
+      // console.log(data);
+    } catch (error) {
+      console.log("something is wrong");
+    }
+  };
+  useEffect(() => {
+    fetchProblems();
+  }, []);
+
   useEffect(() => {
     func(props.difficulty);
   });
 
-  const [data, setData] = useState([]);
+  const [p, setP] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => {
-        const obj = res.data.slice(15);
-        setData(obj);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios
+    //   .get("https://jsonplaceholder.typicode.com/posts")
+    //   .then((res) => {
+    //     const obj = res.data.slice(15);
+    //     setData(obj);
+    //     console.log(typeof data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    setP(props.arr);
+    console.log(p);
   }, []);
 
   return (
@@ -59,8 +80,10 @@ export default function Grid(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((it) => {
-            return (
+          {arr.map((it) => {
+            return props.top != it.tag ? (
+              <></>
+            ) : (
               <TableRow key={it._id}>
                 <td>
                   <Check
@@ -71,9 +94,9 @@ export default function Grid(props) {
                   />
                 </td>
                 <td>
-                  <Badge bg={badge}>{props.difficulty}</Badge>
+                  <Badge bg={badge}>{it.difficulty}</Badge>
                 </td>
-                <td>{it.title}</td>
+                <td>{it.desc}</td>
                 <td>
                   <Dropdown as={ButtonGroup}>
                     <Checkbox

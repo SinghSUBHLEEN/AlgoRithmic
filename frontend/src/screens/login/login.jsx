@@ -1,24 +1,33 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 export default function Login() {
-
   const [data, setData] = useState({ email: "", password: "", rem: 0 });
-
+  const navigate = useNavigate();
   const handleInput = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const func = (p) => {
+    console.log(p);
+    if (p) {
+      localStorage.setItem("userInfo", JSON.stringify(p));
+      navigate("/home");
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post("/api/login", data).then(res => console.log(res)).catch(err => console.log(err));
+    axios
+      .post("/api/login", data)
+      .then((res) => console.log(func(res)))
+      .catch((err) => console.log(err));
   };
 
-  const handleRegister = (event) => {
-
-  }
+  const handleRegister = (event) => {};
   const str = "No account ? ";
   return (
     <div className="formContainer">
@@ -68,8 +77,12 @@ export default function Login() {
             </Button>
           </Form.Group>
           <Form.Group>
-            <Form.Text>{str}
-              <a href="/register" onClick={handleRegister}> Create here!</a>
+            <Form.Text>
+              {str}
+              <a href="/register" onClick={handleRegister}>
+                {" "}
+                Create here!
+              </a>
             </Form.Text>
           </Form.Group>
         </Form>
