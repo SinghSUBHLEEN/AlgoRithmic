@@ -5,13 +5,21 @@ const app = express();
 const mongoose = require("mongoose");
 const connect = require("./config/connect");
 const problemRoutes = require("./routes/problemRoutes");
+const userRoutes = require("./routes/userRoutes");
+const listRoutes = require("./routes/listRoutes");
+
 const User = require("./models/User");
+const { Router } = require("express");
+const router = Router();
+
 connect();
 app.use(express.json());
 app.get(["/"], (req, res) => {
   res.send("Connected");
 });
 app.use("/api", problemRoutes);
+app.use("/api", userRoutes);
+app.use("/api", listRoutes);
 app.listen(5000, () => {
   console.log("Listening at port 5000");
 });
@@ -24,11 +32,14 @@ const loginFunction = async (req, res) => {
   console.log(req.body);
 
   const arr = await User.findOne({ email: email, password: password });
-  if (arr.length === 0) res.status(200).send("No such user");
-  else {
+
+  if (arr) {
     res.json({
       _id: arr._id,
+      list: arr.list,
     });
+  } else {
+    res.status(200).send("no such user found");
   }
 };
 
@@ -48,7 +59,12 @@ app.post("/api/register", (req, res) => {
               res.status(200).send("Account already exists with same email");
             } else {
               User.create(
-                { fname: fname, lname: lname, email: email, password: hash },
+                {
+                  fname: fname,
+                  lname: lname,
+                  email: email,
+                  password: password,
+                },
                 (err, data) => {
                   if (err) {
                     console.log(err);

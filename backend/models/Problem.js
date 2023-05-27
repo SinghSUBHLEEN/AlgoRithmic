@@ -13,5 +13,11 @@ const ProblemSchema = new Schema({
   tag: {
     type: String,
   },
+  checkedBy: [
+    {
+      type: String,
+      ref: "user",
+    },
+  ],
 });
 module.exports = Cart = mongoose.model("problem", ProblemSchema);
