@@ -3,9 +3,11 @@ import Button from "react-bootstrap/Button";
 import "./login.css";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
 
   const [data, setData] = useState({ email: "", password: "", rem: 0 });
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -13,7 +15,21 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post("/api/login", data).then(res => console.log(res)).catch(err => console.log(err));
+    axios.post("/api/login", data).then((res) => {
+      // console.log(res.data);
+      if (res.status !== 201) {
+        throw (res);
+      }
+      else {
+        navigate('/home')
+      }
+    }).catch(err => {
+      if (err.response.status === 400 || err.response.status === 501) {
+        alert(err.response.data.error);
+      }
+      else
+        console.log(err);
+    });
   };
 
   const handleRegister = (event) => {

@@ -1,5 +1,6 @@
 .title {
     font-size: large;
+    margin-top: 0.3rem;
 }
 
 .accordion-button {
@@ -31,7 +32,7 @@
 }
 
 .cls {
-    margin-top: 0.8rem;
+    margin-top: 0.45rem;
 }
 
 .accordion {

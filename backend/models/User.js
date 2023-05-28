@@ -19,6 +19,8 @@ const userSchema = mongoose.Schema({
         required: true
     },
 
+    jwt_token: String,
+
     list: {
         type: Array
     }
