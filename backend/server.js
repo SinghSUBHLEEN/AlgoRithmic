@@ -1,40 +1,26 @@
 const express = require("express");
+const app = express();
 require("dotenv").config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookie = require("cookie-parser");
-
-const mongoose = require("mongoose");
 const connect = require("./config/connect");
 const problemRoutes = require("./routes/problemRoutes");
-const User = require('./models/User');
-const e = require("express");
 connect();
-app.use(express.json());
-app.use(cookie());
-app.use("/api", problemRoutes);
-
-
-const bcrypt = require("bcrypt");
-const app = express();
 const mongoose = require("mongoose");
-const connect = require("./config/connect");
-const problemRoutes = require("./routes/problemRoutes");
 const userRoutes = require("./routes/userRoutes");
 const listRoutes = require("./routes/listRoutes");
-
 const User = require("./models/User");
 const { Router } = require("express");
 const router = Router();
 
-connect();
 app.use(express.json());
-app.get(["/"], (req, res) => {
-  res.send("Connected");
-});
+app.use(cookie());
 app.use("/api", problemRoutes);
 app.use("/api", userRoutes);
 app.use("/api", listRoutes);
+
+
 app.listen(5000, () => {
   console.log("Listening at port 5000");
 });

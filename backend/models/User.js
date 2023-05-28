@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
     {
       type: String,
       ref: "problem",
-    },
+    }
   ]
 });
 
