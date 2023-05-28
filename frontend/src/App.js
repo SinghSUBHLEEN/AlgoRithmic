@@ -15,6 +15,8 @@ export default function App() {
         <header className="App-header"></header>
       </div>
       <Routes>
+        {/* <Route path="/home" element={<div>fjrnbfenfie</div>}></Route> */}
+        {/* <Route exact path='/login' element={<Login />}></Route> */}
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/home" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>

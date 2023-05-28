@@ -3,14 +3,7 @@ import "./listele.css";
 import { Row, ProgressBar } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import Grid from "./grid_for_element";
-import { useState } from "react";
 const ListElement = (props) => {
-  //   const [l, setL] = useState([]);
-  //   setL(props.arrP);
-  //   console.log(l);
-  //console.log(props.r);
-  // console.log("y");
-  //   console.log(props.difficulty);
 
   return (
     <>
@@ -49,12 +42,7 @@ const ListElement = (props) => {
                 </Container>
               </Accordion.Header>
               <Accordion.Body className="rounded">
-                <Grid
-                  difficulty={props.difficulty}
-                  title={props.title}
-                  link={props.link}
-                  top={props.topic}
-                />
+                <Grid top={props.topic} />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

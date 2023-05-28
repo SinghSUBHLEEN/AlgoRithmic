@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ListElement from "../ListElement/listele";
 import axios from "axios";
+import cookie from "js-cookie";
 
 import Nav from "react-bootstrap/Nav";
 
@@ -34,13 +35,11 @@ const arr = [
   "Bit manipulation",
   "Greedy",
 ];
-let obj;
 const Home = () => {
-  let k;
-  let y;
-  const [i, seti] = useState(0);
-  const [problems, setProblems] = useState([]);
-  const [r, setR] = useState("");
+
+  useEffect(() => {
+    console.log(cookie.get("token"));
+  }, []);
 
   return (
     <div>
@@ -49,7 +48,7 @@ const Home = () => {
         Prepare by Roadmaps and practice problems
       </h6>
       {arr.map((it) => {
-        return <ListElement topic={it} arrP={r} difficulty="Easy" />;
+        return <ListElement topic={it} />;
       })}
     </div>
   );

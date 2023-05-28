@@ -7,6 +7,8 @@ const cookie = require("cookie-parser");
 const connect = require("./config/connect");
 const problemRoutes = require("./routes/problemRoutes");
 connect();
+const session = require('express-session');
+const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
 const listRoutes = require("./routes/listRoutes");
@@ -20,8 +22,6 @@ app.use(cookie());
 app.use("/api", problemRoutes);
 app.use("/api", userRoutes);
 app.use("/api", listRoutes);
-
-
 app.use("/api", checkRoutes);
 app.listen(5000, () => {
   console.log("Listening at port 5000");
@@ -58,22 +58,27 @@ app.post('/api/login', (req, res) => {
             else {
               const token = jwt.sign({ _id: data._id }, process.env.token_secret_key);
               const options = {
-                expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
+                expires: new Date(Date.now() + 1000 * 10),
                 // maximum date upto which it will usrvive is 2 days from now
               };
               if (!val)
                 res.status(400).json({ error: "Wrong password" });
               else {
-                User.updateOne({ _id: data._id }, { token: token }, (err, data) => {
-                  if (err)
-                    res.status(501);
-                  else {
-                    res.status(201).cookie("token", { jwt_token: token }, {
-                      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
-                    }).json({ message: "Logged in", error: "", token: token });
-                  }
+                res.status(201).cookie("token", token, {
+                  expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
+                }).json({ _id: data._id, message: "Logged in", error: "", token: token });
+                // res.status(201).cookie("token", { jwt_token: token }, {
+                //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
+                // }).json({ _id: data._id, message: "Logged in", error: "", token: token });
 
-                })
+                // User.updateOne({ _id: data._id }, { token: token }, (err, data) => {
+                //   if (err)
+                //     res.status(501);
+                //   else {
+                //     
+                //   }
+
+                // })
               }
 
             }
