@@ -1,11 +1,11 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
-
   const [data, setData] = useState({ email: "", password: "", rem: 0 });
   const navigate = useNavigate();
 

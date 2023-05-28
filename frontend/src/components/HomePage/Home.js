@@ -30,25 +30,48 @@ const arr = [
   "Bit manipulation",
   "Greedy",
 ];
-
+let obj;
 const Home = () => {
+  let k;
+  let y;
   const [i, seti] = useState(0);
   const [problems, setProblems] = useState([]);
+  const [r, setR] = useState("");
+  // const fetchProblems = async () => {
+  //   try {
+  //     const res = await axios.get("/api/getProblems");
 
-  const fetchProblems = async () => {
-    try {
-      const { data } = await axios.get("/api/getProblems");
-      setProblems(data);
-      console.log(problems);
-      console.log(data);
-      //   console.log(problems);
-    } catch (error) {
-      console.log("something is wrong");
-    }
-  };
-  useEffect(() => {
-    fetchProblems();
-  }, []);
+  //     console.log(res.data);
+
+  //     setProblems(res.data);
+  //     console.log(problems);
+
+  //     console.log(typeof data);
+  //   } catch (error) {
+  //     console.log("something is wrong");
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchProblems();
+  // }, []);
+
+  // const fetchProblems = async () => {
+  //   try {
+  //     // const { res } = await axios.get("/api/getProblems");
+  //     const { data } = await axios.get("/api/getProblems");
+  //     k = data;
+  //     y = JSON.stringify(k);
+  //     setR(y);
+  //     console.log(typeof y);
+  //     console.log(r);
+  //     //   console.log(y);
+  //   } catch (error) {
+  //     console.log("something is wrong");
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchProblems();
+  // }, []);
 
   return (
     <div>
@@ -57,7 +80,7 @@ const Home = () => {
         Prepare by Roadmaps and practice problems
       </h6>
       {arr.map((it) => {
-        return <ListElement topic={it} difficulty="Easy" />;
+        return <ListElement topic={it} arrP={r} difficulty="Easy" />;
       })}
     </div>
   );

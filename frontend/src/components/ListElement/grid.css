@@ -1,6 +1,14 @@
 .heading {
-    font-size: 1.4rem;
-    font-variant: small-caps;
-    color: ghostwhite;
-    text-align: left;
+  font-size: 1.4rem;
+  font-variant: small-caps;
+  color: ghostwhite;
+  text-align: left;
+}
+.gridElementFullBox {
+  color: white;
+  background-color: rgb(48, 183, 255);
+  border-radius: 3px;
+}
+.gridElementHollowBox {
+  color: grey;
 }
