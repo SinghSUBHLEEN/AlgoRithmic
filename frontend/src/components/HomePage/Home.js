@@ -7,6 +7,10 @@ import Col from "react-bootstrap/Col";
 import ListElement from "../ListElement/listele";
 import axios from "axios";
 
+import Nav from "react-bootstrap/Nav";
+
+import Tab from "react-bootstrap/Tab";
+
 const arr = [
   "Basics",
   "Arrays and Hashing",
@@ -37,41 +41,6 @@ const Home = () => {
   const [i, seti] = useState(0);
   const [problems, setProblems] = useState([]);
   const [r, setR] = useState("");
-  // const fetchProblems = async () => {
-  //   try {
-  //     const res = await axios.get("/api/getProblems");
-
-  //     console.log(res.data);
-
-  //     setProblems(res.data);
-  //     console.log(problems);
-
-  //     console.log(typeof data);
-  //   } catch (error) {
-  //     console.log("something is wrong");
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchProblems();
-  // }, []);
-
-  // const fetchProblems = async () => {
-  //   try {
-  //     // const { res } = await axios.get("/api/getProblems");
-  //     const { data } = await axios.get("/api/getProblems");
-  //     k = data;
-  //     y = JSON.stringify(k);
-  //     setR(y);
-  //     console.log(typeof y);
-  //     console.log(r);
-  //     //   console.log(y);
-  //   } catch (error) {
-  //     console.log("something is wrong");
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchProblems();
-  // }, []);
 
   return (
     <div>

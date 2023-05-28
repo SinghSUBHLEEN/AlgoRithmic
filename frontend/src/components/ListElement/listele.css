@@ -1,39 +1,47 @@
 .title {
-    font-size: large;
+  font-size: large;
 }
 
 .accordion-button {
-    background-color: inherit !important;
-    border: none;
+  background-color: inherit !important;
+  border: none;
 }
 
 .progressbar {
-    justify-content: center;
+  justify-content: center;
 }
 
 .accordion-button:focus {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 .dropdown {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 .accordion-body {
-    background-color: #2d2d2d;
-    height: fit-content;
+  background-color: #2d2d2d;
+  height: fit-content;
 }
 
 .link {
-    text-decoration: none;
-    color: ghostwhite;
-    font-size: 120%;
+  text-decoration: none;
+  color: ghostwhite;
+  font-size: 120%;
 }
 
 .cls {
-    margin-top: 0.8rem;
+  margin-top: 0.8rem;
 }
 
 .accordion {
-    margin: 0.7%;
+  margin: 0.7%;
+}
+.zucc {
+  color: rgb(0, 183, 255);
+  margin-left: 10px;
+}
+.zucc:hover {
+  cursor: pointer;
+  color: skyblue;
 }

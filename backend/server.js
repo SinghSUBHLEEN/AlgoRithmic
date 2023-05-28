@@ -7,7 +7,7 @@ const connect = require("./config/connect");
 const problemRoutes = require("./routes/problemRoutes");
 const userRoutes = require("./routes/userRoutes");
 const listRoutes = require("./routes/listRoutes");
-
+const checkRoutes = require("./routes/createChecks");
 const User = require("./models/User");
 const { Router } = require("express");
 const router = Router();
@@ -20,6 +20,7 @@ app.get(["/"], (req, res) => {
 app.use("/api", problemRoutes);
 app.use("/api", userRoutes);
 app.use("/api", listRoutes);
+app.use("/api", checkRoutes);
 app.listen(5000, () => {
   console.log("Listening at port 5000");
 });

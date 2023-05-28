@@ -1,9 +1,12 @@
 const List = require("../models/List");
 const Problem = require("../models/Problem");
+const User = require("../models/User");
 const { findByIdAndDelete } = require("../models/User");
 module.exports.createList = async (req, res) => {
   const id = req.body.userId;
   const t = req.body.title;
+  console.log(id);
+  console.log(t);
   const x = await List.create({ createdBy: id, listTitle: t });
   if (x) {
     res.status(201).json({
@@ -16,8 +19,8 @@ module.exports.createList = async (req, res) => {
   }
 };
 module.exports.addToList = async (req, res) => {
-  const id = req.body.listId;
-  const pId = req.body.problemId;
+  const id = req.params.listId;
+  const pId = req.params.problemId;
   let x = await List.findOne({ _id: id });
   if (x) {
     // res.status(201).json(x);
@@ -61,5 +64,48 @@ module.exports.deleteProblemFromList = async (req, res) => {
       x = await x.save();
       res.status(201).json("problem has been delted from the list");
     }
+  }
+};
+
+module.exports.getList = async (req, res) => {
+  const id = req.params.id;
+  let x = await List.find({ createdBy: id });
+
+  if (x) {
+    res.status(201).json(x);
+  } else {
+    res.status(201).send("no list found");
+  }
+};
+
+module.exports.getSolved = async (req, res) => {
+  const id = req.params.id;
+  let x = await User.findOne({ _id: id });
+  if (x) {
+    res.status(201).json(x.list);
+  }
+};
+
+module.exports.getListForHomePage = async (req, res) => {
+  try {
+    const y = req.params.id;
+    let x = await List.find({ createdBy: y }); //listCollection
+    const arr = await User.findOne({ _id: y }); //solved array
+    console.log(y);
+    if (arr) {
+      if (x) {
+        res.status(201).send(
+          {
+            listArray: x,
+            solvedArray: arr.list,
+          }
+
+          //list: arr.list,
+        );
+      }
+    } else res.status(201).send(null);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("something is wrong");
   }
 };

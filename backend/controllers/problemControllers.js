@@ -1,4 +1,5 @@
 const Problem = require("../models/Problem");
+const User = require("../models/User");
 module.exports.addProblem = async (req, res) => {
   const { difficulty, desc, link, tag } = req.body;
   const x = await Problem.create({ difficulty, desc, link, tag });
@@ -16,30 +17,45 @@ module.exports.addProblem = async (req, res) => {
   }
 };
 module.exports.findAllProblems = async (req, res) => {
+  // const y = req.params.id;
+  // console.log(y);
+
   try {
+    const y = req.params.id;
     let x = await Problem.find();
-    if (x) {
-      res.status(201).send(x);
-    } else res.status(201).senc(null);
+    const arr = await User.findOne({ _id: y });
+    console.log(y);
+    if (arr) {
+      if (x) {
+        res.status(201).send(
+          {
+            problemsArray: x,
+            userList: arr.list,
+          }
+
+          //list: arr.list,
+        );
+      }
+    } else res.status(201).send(null);
   } catch (error) {
     console.log(error);
     res.status(500).send("something is wrong");
   }
 };
 module.exports.checker = async (req, res) => {
-  const userId = req.body.userId;
-  const problemId = req.body.problemId;
-  console.log(typeof problemId);
   // return res.status(201).send(typeof problemId);
   try {
+    const userId = req.params.id;
+    const problemId = req.params.pid;
+    console.log(typeof problemId);
     console.log(userId);
-    let x = await Problem.findOne({ _id: problemId });
+    let x = await User.findOne({ _id: userId });
     if (x) {
-      let idx = x.checkedBy.findIndex((p) => p == userId);
+      let idx = x.list.findIndex((p) => p == problemId);
       if (idx == -1) {
-        x.checkedBy.push(userId);
+        x.list.push(problemId);
       } else {
-        x.checkedBy.pull(userId);
+        x.list.pull(problemId);
       }
       x = await x.save();
       return res.status(201).send(x);

@@ -12,3 +12,15 @@
 .gridElementHollowBox {
   color: grey;
 }
+.gridElementCreateListSection {
+  background-color: rgb(44, 43, 43);
+}
+.gridElementCreateListSection > Button {
+  width: 100%;
+}
+.gridElementDropdownWrapper {
+  padding: 20px;
+}
+.gridElementCreateListTextField {
+  background-color: rgb(205, 205, 205);
+}
