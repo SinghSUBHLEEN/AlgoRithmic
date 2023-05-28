@@ -29,4 +29,4 @@ const ListSchema = new Schema({
     },
   ],
 });
-module.exports = Cart = mongoose.model("list", ListSchema);
+module.exports = List = mongoose.model("list", ListSchema);
