@@ -283,7 +283,7 @@ export default function Grid(props) {
                       onClick={() => validate(it._id)}
                     />
                   )} */}
-                  {done.find((c) => c === it._id) ? (
+                  {/*{done.find((c) => c === it._id) ? (
                     <Check
                       type="checkbox"
                       name="rem"
