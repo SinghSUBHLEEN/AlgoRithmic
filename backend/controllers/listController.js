@@ -49,19 +49,23 @@ module.exports.addToList = async (req, res) => {
 };
 
 module.exports.deleteList = async (req, res) => {
-  const id = req.body.listId;
+  const id = req.params.listId;
   const p = await List.findByIdAndDelete({ _id: id });
+  if (p) {
+    res.status(201).send("has been deleted");
+  }
 };
 
 module.exports.deleteProblemFromList = async (req, res) => {
-  const id = req.body.listId;
-  const pp = req.body.problemId;
+  const id = req.params.listId;
+  const pp = req.params.problemId;
   let x = await List.findOne({ _id: id });
   if (x) {
     let idx = x.problems.findIndex((p) => p.problemId === pp);
     if (idx !== -1) {
       x.problems.splice(idx, 1);
       x = await x.save();
+
       res.status(201).json("problem has been delted from the list");
     }
   }
