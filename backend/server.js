@@ -7,13 +7,13 @@ const cookie = require("cookie-parser");
 const connect = require("./config/connect");
 const problemRoutes = require("./routes/problemRoutes");
 connect();
-const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
 const listRoutes = require("./routes/listRoutes");
 const checkRoutes = require("./routes/createChecks");
 const User = require("./models/User");
+const Problem = require('./models/Problem');
 const { Router } = require("express");
 const router = Router();
 
@@ -33,7 +33,7 @@ app.listen(5000, () => {
 app.post('/api/login', (req, res) => {
   const { email, password, rem } = req.body;
   if (!email && !password) {
-    res.status(400).json({ error: "Please enter the email and password" });
+    return res.status(400).json({ error: "Please enter the email and password" });
   }
   else if (!email) {
     res.status(400).json({ error: "Please enter the email" });
@@ -78,11 +78,11 @@ app.post('/api/login', (req, res) => {
 app.post('/api/register', (req, res) => {
   console.log(req.body);
   const { fname, lname, email, password, confirm_password, rem } = req.body;
-  if (!email || !password || !fname || !lname || !confirm_password) {
-    res.status(400).json({ error: "Please fill all the feilds" });
+  if (!email || !password || !fname || !confirm_password) {
+    return res.status(400).json({ error: "Please fill all the feilds" });
   }
   if (password !== confirm_password)
-    res.status(400).json({ error: "Password does not match" });
+    return res.status(400).json({ error: "Password does not match" });
   User.findOne({ email: email }, (err, data) => {
     if (err)
       res.status(501).json({ error: "Something went wrong" });
@@ -118,7 +118,7 @@ app.post('/api/register', (req, res) => {
 app.post("/api/verify", (req, res) => {
   console.log(req.cookies);
   const cook = req.cookies.token;
-  const _id = jwt.verify(token, process.env.token_secret_key);
+  const _id = jwt.verify(token, process.env.token_secret_key)._id;
   User.findOne({ _id: _id, }, (err, data) => {
     if (err)
       res.status(501);
@@ -130,3 +130,81 @@ app.post("/api/verify", (req, res) => {
     }
   });
 })
+
+app.post("/api/getProblemsByTag", (req, res) => {
+  const { tag } = req.body;
+  Problem.find({ tag: tag }, (err, data) => {
+    if (err) res.status(501).json({ error: "Something went wrong" });
+    else {
+      console.log(data);
+      data.flag = false;
+      res.status(201).json({ arr: data });
+    }
+  })
+});
+
+app.post('/api/getProblemsByTagAndId', (req, res) => {
+  const { tag, token } = req.body;
+  let ispresent = new Array();
+  const userid = jwt.verify(token, process.env.token_secret_key)._id;
+  console.log(req.body);
+  const ans = [{
+    difficulty: String, _id: String, tag: String, desc: String, link: String, flag: Boolean
+  }];
+  Problem.find({ tag: tag }, (err, data) => {
+    if (err) res.status(501).json({ error: "Something went wrong" });
+    else {
+      for (let i = 0; i < data.length; i += 1) {
+        const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
+        if (data[i].checkedBy.get(userid))
+          ispresent.push(data[i]._id);
+        ans.push(obj);
+      }
+      res.status(201).json({ error: "", arr: ans, check: ispresent });
+    }
+  })
+});
+
+app.post('/api/handleUpdate', (req, res) => {
+  const { problemId, token } = req.body;
+  const arr1 = [];
+  const arr2 = [];
+  const userid = jwt.verify(token, process.env.token_secret_key)._id;
+  console.log(userid);
+  Problem.findOne({ _id: problemId }, (err, data) => {
+    if (err)
+      res.status(501).json({ error: "Something went wrong" });
+    else {
+      const obj = data;
+      if (data.checkedBy.get(userid)) {
+        let m = data.checkedBy;
+        m.delete(userid);
+        console.log("removed" + userid);
+        obj.checkedBy = m;
+      }
+      else {
+        let m = data.checkedBy;
+        m.set(userid, "present");
+        console.log("created" + userid);
+        obj.checkedBy = m;
+      }
+      Problem.updateOne({ _id: problemId }, obj, (err, data) => {
+        if (err)
+          res.status(501).json({ error: "Something went wrong" });
+        else {
+          res.status(201).json({ message: "Done", error: "", arr });
+        }
+      })
+    }
+  })
+})
+
+// let m = new Map();
+// m.set("check", 1);
+
+// Problem.create({ difficulty: "Hard", desc: "Number of Great Partitions", link: "https://leetcode.com/problems/number-of-great-partitions/", tag: "Dynamic Programming", checkedBy: m }, (err, data) => {
+//   if (err) console.log(err);
+//   else {
+//     console.log(data);
+//   }
+// });

@@ -35,3 +35,7 @@ form {
 .an:hover {
     cursor: pointer;
 }
+
+.star {
+    color: crimson;
+}

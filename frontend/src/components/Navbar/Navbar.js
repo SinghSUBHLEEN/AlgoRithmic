@@ -6,7 +6,7 @@ import NavbarB from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import cookie from 'js-cookie';
-const Navbar = () => {
+const Navbar = (props) => {
   const navigate = useNavigate();
   const deleteCookie = () => {
     cookie.remove("token");
@@ -46,7 +46,7 @@ const Navbar = () => {
             <Nav.Link onClick={problemF}>Problems</Nav.Link>
           </Nav>
           <Nav>
-            <NavDropdown title="Profile" id="collasible-nav-dropdown">
+            {props.hide ? <></> : (<NavDropdown title="Profile" id="collasible-nav-dropdown">
               <NavDropdown.Item onClick={mylistF}>My Lists</NavDropdown.Item>
               <NavDropdown.Divider />
               {cook ? (
@@ -56,7 +56,8 @@ const Navbar = () => {
                 <></>
               ) : <NavDropdown.Item onClick={registerF}>Register</NavDropdown.Item>}
 
-            </NavDropdown>
+            </NavDropdown>)
+            }
 
           </Nav>
         </NavbarB.Collapse>

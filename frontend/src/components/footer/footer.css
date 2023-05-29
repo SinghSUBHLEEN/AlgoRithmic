@@ -1,0 +1,27 @@
+.c {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.h {
+    font-size: medium;
+    text-align: center;
+}
+
+.break {
+    margin: auto;
+    width: 50rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    border-top: 0.1rem dotted white;
+    /* border: 0.02rem disc white; */
+}
+
+.end {
+    height: 1rem;
+}

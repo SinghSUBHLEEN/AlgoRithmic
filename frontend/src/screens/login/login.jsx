@@ -4,6 +4,7 @@ import "./login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import cookie from 'js-cookie';
+import Navbar from "../../components/Navbar/Navbar";
 import { useState, useEffect } from "react";
 export default function Login() {
 
@@ -46,60 +47,63 @@ export default function Login() {
   }
   const str = "No account ? ";
   return (
-    <div className="formContainer">
-      <div className="myForm d-flex justify-content-center align-items-center">
-        <Form className="rounded p-4 p-sm-7 signup-form loginContainer">
-          <Form.Group className="mb-3">
-            <h1 className="loginHead">Login</h1>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              className="mb-3"
-              controlId="formBasicEmail"
-              type="email"
-              placeholder="Enter Email"
-              name="email"
-              onChange={handleInput}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              className="email-input"
-              type="password"
-              placeholder="Enter Password"
-              name="password"
-              onChange={handleInput}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Check
-              type="checkbox"
-              label="Remember me"
-              name="rem"
-              onChange={handleInput}
-            ></Form.Check>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Button
-              className="submit-button"
-              variant="primary"
-              value="submit"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Sign in
-            </Button>
-          </Form.Group>
-          <Form.Group>
-            <Form.Text>{str}
-              <a onClick={handleRegister} className="an"> Create here!</a>
-            </Form.Text>
-          </Form.Group>
-        </Form>
+    <>
+      <Navbar hide={true} />
+      <div className="formContainer">
+        <div className="myForm d-flex justify-content-center align-items-center">
+          <Form className="rounded p-4 p-sm-7 signup-form loginContainer">
+            <Form.Group className="mb-3">
+              <h1 className="loginHead">Login</h1>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label><span className="star">* </span>Email Address</Form.Label>
+              <Form.Control
+                className="mb-3"
+                controlId="formBasicEmail"
+                type="email"
+                placeholder="Enter Email"
+                name="email"
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label><span className="star">* </span>Password</Form.Label>
+              <Form.Control
+                className="email-input"
+                type="password"
+                placeholder="Enter Password"
+                name="password"
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Check
+                type="checkbox"
+                label="Remember me"
+                name="rem"
+                onChange={handleInput}
+              ></Form.Check>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Button
+                className="submit-button"
+                variant="primary"
+                value="submit"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Sign in
+              </Button>
+            </Form.Group>
+            <Form.Group>
+              <Form.Text>{str}
+                <a onClick={handleRegister} className="an"> Create here!</a>
+              </Form.Text>
+            </Form.Group>
+          </Form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -7,26 +7,32 @@ import { Routes, BrowserRouter, Route } from "react-router-dom";
 import MyList from "./components/ViewLists/ListsPage.js";
 import Element from "./components/ListElement/listele";
 import Protected from "./components/protected/Protected";
+import Footer from "./components/footer/footer";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <header className="App-header"></header>
-      </div>
-      <Routes>
-        {/* <Route path="/home" element={<div>fjrnbfenfie</div>}></Route> */}
-        {/* <Route exact path='/login' element={<Login />}></Route> */}
-        <Route exact path="/" element={<Home />}></Route>
-        <Route exact path="/home" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route exact path="/register" element={<Register />}></Route>
-        <Route exact path="/mylists" element={<Protected component={MyList} />}></Route>
-        <Route
-          path="/element"
-          element={<Element topic="Stack" difficulty="Easy" />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <main>
+          <div className="App">
+            <header className="App-header"></header>
+          </div>
+          <Routes>
+            {/* <Route path="/home" element={<div>fjrnbfenfie</div>}></Route> */}
+            {/* <Route exact path='/login' element={<Login />}></Route> */}
+            <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/home" element={<Home />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route exact path="/register" element={<Register />}></Route>
+            <Route exact path="/mylists" element={<Protected component={MyList} />}></Route>
+            <Route
+              path="/element"
+              element={<Element topic="Stack" difficulty="Easy" />}
+            />
+          </Routes>
+        </main>
+      </BrowserRouter>
+      <Footer />
+    </>
   );
 }
