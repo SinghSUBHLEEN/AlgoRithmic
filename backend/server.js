@@ -31,7 +31,7 @@ app.listen(5000, () => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.post('/api/login', (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, rem } = req.body;
   if (!email && !password) {
     res.status(400).json({ error: "Please enter the email and password" });
   }
@@ -57,28 +57,14 @@ app.post('/api/login', (req, res) => {
             }
             else {
               const token = jwt.sign({ _id: data._id }, process.env.token_secret_key);
-              const options = {
-                expires: new Date(Date.now() + 1000 * 10),
-                // maximum date upto which it will usrvive is 2 days from now
-              };
               if (!val)
                 res.status(400).json({ error: "Wrong password" });
               else {
-                res.status(201).cookie("token", token, {
-                  expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
-                }).json({ _id: data._id, message: "Logged in", error: "", token: token });
-                // res.status(201).cookie("token", { jwt_token: token }, {
-                //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
-                // }).json({ _id: data._id, message: "Logged in", error: "", token: token });
-
-                // User.updateOne({ _id: data._id }, { token: token }, (err, data) => {
-                //   if (err)
-                //     res.status(501);
-                //   else {
-                //     
-                //   }
-
-                // })
+                let options;
+                if (rem === 'on') {
+                  options = { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) };
+                }
+                res.status(201).cookie("token", token, options).json({ _id: data._id, message: "Logged in", error: "", token: token });
               }
 
             }
@@ -90,39 +76,57 @@ app.post('/api/login', (req, res) => {
 });
 
 app.post('/api/register', (req, res) => {
-  const { fname, lname, email, password, confirm_password } = req.body;
-  if (password == confirm_password) {
-    User.findOne({ email: email }, (err, data) => {
-      if (err)
-        res.status(500).send("Something went wrong");
-      else {
-        console.log(data);
-        if (data) {
-          res.status(200).send("Email already taken");
-        }
-        else {
-          bcrypt.hash(password, 10, (err, hash) => {
-            if (err)
-              res.status(200).send("Something went wrong");
-            else {
-              User.create({ email: email, fname: fname, lname: lname, password: hash }, (err, data) => {
-                if (err)
-                  res.status(501).send("Cannot create user right now, please try again later");
-                else {
-                  data.token = jwt.sign({ _id: data._id }, process.env.token_secret_key);
-                  res.status(201).send("User created");
-                }
-              });
-            }
-          })
-        }
-      }
-    })
+  console.log(req.body);
+  const { fname, lname, email, password, confirm_password, rem } = req.body;
+  if (!email || !password || !fname || !lname || !confirm_password) {
+    res.status(400).json({ error: "Please fill all the feilds" });
   }
+  if (password !== confirm_password)
+    res.status(400).json({ error: "Password does not match" });
+  User.findOne({ email: email }, (err, data) => {
+    if (err)
+      res.status(501).json({ error: "Something went wrong" });
+    else {
+      console.log(data);
+      if (data) {
+        res.status(400).json({ error: "User already exists" });
+      }
+      else {
+        bcrypt.hash(password, 10, (err, hash) => {
+          if (err)
+            res.status(501).json({ error: "Something went wrong" });
+          else {
+            User.create({ email: email, fname: fname, lname: lname, password: hash }, (err, data) => {
+              if (err)
+                res.status(501).json({ error: "Cannot create user right now, please try again later" });
+              else {
+                const token = jwt.sign({ _id: data._id }, process.env.token_secret_key);
+                let options;
+                if (rem === 'on') {
+                  options = { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) };
+                }
+                res.status(201).cookie("token", token, options).json({ _id: data._id, message: "Logged in", error: "", token: token });
+              }
+            });
+          }
+        })
+      }
+    }
+  })
 });
 
 app.post("/api/verify", (req, res) => {
   console.log(req.cookies);
-  if (!req.cookies) res.status(400).json({ flag: false });
-  else res.status(201).json({ flag: true });
+  const cook = req.cookies.token;
+  const _id = jwt.verify(token, process.env.token_secret_key);
+  User.findOne({ _id: _id, }, (err, data) => {
+    if (err)
+      res.status(501);
+    else {
+      if (data)
+        res.status(201);
+      else
+        res.status(400);
+    }
+  });
 })

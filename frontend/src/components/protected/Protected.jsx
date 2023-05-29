@@ -7,16 +7,26 @@ import cookie from "js-cookie";
 export default function Protected() {
 
     const navigate = useNavigate();
-
+    const cook = cookie.get("token");
     useEffect(() => {
-        console.log(cookie.token);
-        if (cookie.token === "")
+        const cook = cookie.get("token");
+        if (!cook)
             navigate('/login');
         else {
-            axios.post("/api/verify", { token: cookie.jwt_token }).then((res) => {
-                if (res.status === 400);
-                navigate('/login');
-            }).catch(err => console.log(err));
+            axios.post("/api/verify", { token: cook }).then((res) => {
+                if (res.status === 201)
+                    return;
+            }).catch(err => {
+                console.log(err)
+                // if (res.status === 501) {
+                //     if (alert("Something went wrong"))
+                //         navigate('/login');
+                // }
+                // else if (res.status === 400) {
+                //     if (alert("Login sessin expired due to invalid cookies"))
+                //         navigate('/login');
+                // }
+            });
         }
     });
 

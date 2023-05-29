@@ -2,15 +2,23 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./Register.css";
 import axios from "axios";
-import { useState } from "react";
+import cookie from "js-cookie";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Register() {
+  const navigate = useNavigate();
+  const cook = cookie.get('token');
+  useEffect(() => {
+    if (cook)
+      navigate('/');
+  })
   const [data, setData] = useState({
     lname: "",
     fname: "",
     email: "",
     password: "",
     confirm_password: "",
-    rem: 0,
+    rem: "off"
   });
 
   const handleInput = (e) => {
@@ -19,11 +27,29 @@ export default function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post("/api/register", data).then(res => console.log(res)).catch(err => console.log(err));
+    axios.post("/api/register", data).then((res) => {
+      if (res.status !== 201) {
+        throw (res);
+      }
+      else {
+        localStorage.setItem("userInfo", JSON.stringify(res));
+        navigate('/')
+      }
+    }).catch(err => {
+      if (err.response.status === 400 || err.response.status === 501) {
+        alert(err.response.data.error);
+      }
+      else
+        console.log(err);
+    });
   };
 
 
   const str = "Already have an account ?   ";
+
+  const loginF = () => {
+    navigate('/login');
+  }
 
   return (
     <div className="formContainer">
@@ -83,7 +109,16 @@ export default function Register() {
               placeholder="Re-enter Password"
               name="confirm_password"
               onChange={handleInput}
+              autoComplete="off"
             />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Check
+              type="checkbox"
+              label="Remember me"
+              name="rem"
+              onChange={handleInput}
+            ></Form.Check>
           </Form.Group>
           <Form.Group className="mb-3">
             <Button
@@ -98,7 +133,7 @@ export default function Register() {
           </Form.Group>
           <Form.Group>
             <Form.Text>{str}
-              <a href="/login"> Sign in here!</a>
+              <a onClick={loginF} className="an"> Sign in here!</a>
             </Form.Text>
           </Form.Group>
         </Form>

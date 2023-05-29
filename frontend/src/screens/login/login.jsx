@@ -7,13 +7,15 @@ import cookie from 'js-cookie';
 import { useState, useEffect } from "react";
 export default function Login() {
 
+  const cook = cookie.get("token");
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log(cookie.get("token"));
-    // if(cookie.get('token'))
+    if (cook)
+      navigate('/');
   }, []);
 
-  const [data, setData] = useState({ email: "", password: "", rem: 0 });
-  const navigate = useNavigate();
+  const [data, setData] = useState({ email: "", password: "", rem: 'off' });
+
 
   const handleInput = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -28,7 +30,7 @@ export default function Login() {
       }
       else {
         localStorage.setItem("userInfo", JSON.stringify(res));
-        navigate('/home')
+        navigate('/')
       }
     }).catch(err => {
       if (err.response.status === 400 || err.response.status === 501) {
@@ -40,7 +42,7 @@ export default function Login() {
   };
 
   const handleRegister = (event) => {
-
+    navigate('/register');
   }
   const str = "No account ? ";
   return (
@@ -92,7 +94,7 @@ export default function Login() {
           </Form.Group>
           <Form.Group>
             <Form.Text>{str}
-              <a href="/register" onClick={handleRegister}> Create here!</a>
+              <a onClick={handleRegister} className="an"> Create here!</a>
             </Form.Text>
           </Form.Group>
         </Form>

@@ -27,3 +27,11 @@ form {
     justify-content: center;
     text-align: center;
 }
+
+.an {
+    text-decoration: underline;
+}
+
+.an:hover {
+    cursor: pointer;
+}

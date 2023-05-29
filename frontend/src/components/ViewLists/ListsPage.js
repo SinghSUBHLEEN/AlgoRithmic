@@ -11,8 +11,17 @@ import AddListButton from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import CheckIcon from "@mui/icons-material/Check";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import cookie from "js-cookie";
 
 const ListsPage = () => {
+  const cook = cookie.get("token");
+  const navigate = useNavigate();
+  console.log(cook);
+  if (!cook) {
+    console.log("not  available");
+    navigate('/login');
+  }
   const [currentId, setCurrentId] = useState("");
   let [arr, setArr] = useState([]);
   const [l, setl] = useState(false);
@@ -20,17 +29,21 @@ const ListsPage = () => {
   const [title, setTitle] = useState("");
   const [completed, setCompleted] = useState([]);
   const functionSetter = async (id) => {
-    let idx = list.find((p) => p._id === id);
-    //setArr(list[idx].problems);
-    console.log(typeof idx);
-    console.log(idx);
+    if (cook) {
+      let idx = list.find((p) => p._id === id);
+      //setArr(list[idx].problems);
+      console.log(typeof idx);
+      console.log(idx);
 
-    console.log(idx.problems);
-    setTitle(idx.listTitle);
-    console.log(title);
-
-    setArr(idx.problems);
-    console.log(arr);
+      console.log(idx.problems);
+      if (cook)
+        setTitle(idx.listTitle);
+      console.log(title);
+      if (cook)
+        setArr(idx.problems);
+      console.log(arr);
+    }
+    else navigate('/login');
   };
   // const getSolvedProblems = async () => {
   //   const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
@@ -46,26 +59,37 @@ const ListsPage = () => {
   // };
 
   const fetchLists = async () => {
-    const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
-    console.log(a);
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    if (cook) {
+      const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
+      console.log(a);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    const { data } = await axios.post(`/api/getListForHomePage/${a}`, config);
-    setList(data.listArray);
-    setCompleted(data.solvedArray);
-    console.log(data.solvedArray);
-    console.log(data.listArray);
-    console.log(data);
+      const { data } = await axios.post(`/api/getListForHomePage/${a}`, config);
+      setList(data.listArray);
+      setCompleted(data.solvedArray);
+      console.log(data.solvedArray);
+      console.log(data.listArray);
+      console.log(data);
+    }
+    else
+      navigate('/login');
   };
   const setColorHandler = (event, id) => {
+    if (!cook)
+      navigate('/login');
     setCurrentId(id);
     functionSetter(id);
   };
   useEffect(() => {
+    const cook = cookie.get("token");
+    if (!cook) {
+      if (alert("Not allwoed"))
+        navigate('/login');
+    }
     // getSolvedProblems();
     fetchLists();
   }, []);
@@ -76,7 +100,7 @@ const ListsPage = () => {
         <div className="rounded myListLeftSection">
           <div className="myListLeftSectionBottom">
             <Form>
-              {list.map((itr) => {
+              {cook && list.map((itr) => {
                 return (
                   <div
                     onClick={(e) => {
@@ -132,12 +156,12 @@ const ListsPage = () => {
                   {completed.find((p) => p === itr.problemId) ? (
                     <CheckIcon
                       className="gridElementFullBox"
-                      // onClick={() => validate(it._id)}
+                    // onClick={() => validate(it._id)}
                     />
                   ) : (
                     <CheckBoxOutlineBlankIcon
                       className="gridElementHollowBox"
-                      // onClick={() => validate(it._id)}
+                    // onClick={() => validate(it._id)}
                     />
                   )}
 

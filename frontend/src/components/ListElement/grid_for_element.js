@@ -6,7 +6,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import cookie from "js-cookie";
-import navigate from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
@@ -23,7 +23,7 @@ export default function Grid(props) {
   const [name, setName] = useState("");
   // new list name inpt
   const [badge, setBadge] = useState("sucess");
-
+  const navigate = useNavigate();
   const func = (str) => {
     if (str === "Medium") setBadge("warning");
     else if (str === "Hard") setBadge("danger");
@@ -35,6 +35,7 @@ export default function Grid(props) {
   // do not change this
   const fetchLists = async () => {
     if (!cook) return;
+    console.log("reading");
     const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
     console.log(a);
     const config = {
@@ -86,6 +87,7 @@ export default function Grid(props) {
 
   const fetcher = async () => {
     // const= 
+    if (!cook) return;
     const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
     console.log(a);
     const config = {
@@ -96,7 +98,8 @@ export default function Grid(props) {
     const { data } = await axios.get(`/api/getProblems/${a}`, config);
     console.log(data);
     setPl(data.problemsArray);
-    setDone(data.userList);
+    if (cook)
+      setDone(data.userList);
     console.log(pl);
   };
 
@@ -123,9 +126,6 @@ export default function Grid(props) {
       console.log(error);
     }
   };
-
-
-
 
 
   useEffect(() => {
@@ -174,7 +174,7 @@ export default function Grid(props) {
                     <CheckBoxOutlineBlankIcon />
                   )} */}
 
-                  {done.find((c) => c === it._id) ? (
+                  {cook && done.find((c) => c === it._id) ? (
                     <CheckIcon
                       className="gridElementFullBox"
                       onClick={() => validate(it._id)}
