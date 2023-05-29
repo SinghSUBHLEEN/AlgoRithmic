@@ -163,9 +163,9 @@ export default function Grid(props) {
                   {/* <Check
                     type="checkbox"
                     name="rem"
+                    defaultChecked={true}
                     className="bg-inherit"
                     size="lg"
-                    onClick={() => checkHandler(it._id)}
                   /> */}
                   {/* {console.log(typeof it._id)}
                   {myMap[it._id] === 1 ? (
@@ -174,7 +174,7 @@ export default function Grid(props) {
                     <CheckBoxOutlineBlankIcon />
                   )} */}
 
-                  {done.find((c) => c === it._id) ? (
+                  {/* {done.find((c) => c === it._id) ? (
                     <CheckIcon
                       className="gridElementFullBox"
                       onClick={() => validate(it._id)}
@@ -182,6 +182,24 @@ export default function Grid(props) {
                   ) : (
                     <CheckBoxOutlineBlankIcon
                       className="gridElementHollowBox"
+                      onClick={() => validate(it._id)}
+                    />
+                  )} */}
+                  {done.find((c) => c === it._id) ? (
+                    <Check
+                      type="checkbox"
+                      name="rem"
+                      defaultChecked={true}
+                      className="bg-inherit"
+                      size="lg"
+                      onClick={() => validate(it._id)}
+                    />
+                  ) : (
+                    <Check
+                      type="checkbox"
+                      name="rem"
+                      className="bg-inherit"
+                      size="lg"
                       onClick={() => validate(it._id)}
                     />
                   )}

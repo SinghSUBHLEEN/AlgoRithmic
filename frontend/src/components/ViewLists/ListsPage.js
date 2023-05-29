@@ -16,38 +16,27 @@ const ListsPage = () => {
   const [currentId, setCurrentId] = useState("");
   let [arr, setArr] = useState([]);
   const [l, setl] = useState(false);
+  const [name, setName] = useState("");
   const [list, setList] = useState([]);
   const [title, setTitle] = useState("");
   const [completed, setCompleted] = useState([]);
   const functionSetter = async (id) => {
     let idx = list.find((p) => p._id === id);
     //setArr(list[idx].problems);
-    console.log(typeof idx);
-    console.log(idx);
+    // console.log(typeof idx);
+    //console.log(idx);
 
-    console.log(idx.problems);
+    //console.log(idx.problems);
     setTitle(idx.listTitle);
-    console.log(title);
+    //console.log(title);
 
     setArr(idx.problems);
-    console.log(arr);
+    //console.log(arr);
   };
-  // const getSolvedProblems = async () => {
-  //   const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   };
-  //   const { data } = await axios.post(`/api/getSolved/${a}`, config);
-  //   console.log(data);
-  //   setCompleted(data);
-  //   console.log(completed);
-  // };
 
   const fetchLists = async () => {
     const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
-    console.log(a);
+    //console.log(a);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -57,9 +46,73 @@ const ListsPage = () => {
     const { data } = await axios.post(`/api/getListForHomePage/${a}`, config);
     setList(data.listArray);
     setCompleted(data.solvedArray);
-    console.log(data.solvedArray);
-    console.log(data.listArray);
-    console.log(data);
+  };
+  const deleteList = async (id) => {
+    //const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const data = await axios.post(`/api/deleteList/${id}`, config);
+
+    //window.location.reload(false);
+
+    if (data) {
+      fetchLists();
+    }
+  };
+
+  const createListHandler = async () => {
+    //console.log("crea list");
+    const t = name;
+    const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    const { data } = await axios.post(
+      "/api/createList",
+      {
+        userId: a,
+        title: t,
+      },
+      config
+    );
+    fetchLists();
+  };
+  const deleteProblemFromList = async (event, problemId, listId) => {
+    const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
+    // console.log(a);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post(
+      `/api/deleteProblemFromList/${listId}/${problemId}`
+    );
+    //console.log(data);
+    fetchLists();
+  };
+  const validate = async (id) => {
+    //console.log("validation");
+    const a = JSON.parse(localStorage.getItem("userInfo"));
+    const kk = a.data._id;
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    const d = await axios.post(`/api/markProblem/${kk}/${id}`, config);
+    let v = d.data.value;
+
+    if (d) {
+      fetchLists();
+    }
+
+    return v;
   };
   const setColorHandler = (event, id) => {
     setCurrentId(id);
@@ -98,10 +151,15 @@ const ListsPage = () => {
                   type="text"
                   placeholder="Enter list name"
                   className="newListNameField"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
+              <Button
+                onClick={createListHandler}
+                variant="primary"
+                type="submit"
+              >
                 Create new list
               </Button>
             </Form>
@@ -110,7 +168,11 @@ const ListsPage = () => {
         <div className="myListRightSection">
           <div className="myListRightSectionWrapper">
             <div className="myListRightSectionTitle">{title}</div>
-            <Button variant="outline-danger" className="myListDeleteButton">
+            <Button
+              onClick={() => deleteList(currentId)}
+              variant="outline-danger"
+              className="myListDeleteButton"
+            >
               Delete
             </Button>{" "}
           </div>
@@ -132,12 +194,12 @@ const ListsPage = () => {
                   {completed.find((p) => p === itr.problemId) ? (
                     <CheckIcon
                       className="gridElementFullBox"
-                      // onClick={() => validate(it._id)}
+                      onClick={() => validate(itr.problemId)}
                     />
                   ) : (
                     <CheckBoxOutlineBlankIcon
                       className="gridElementHollowBox"
-                      // onClick={() => validate(it._id)}
+                      onClick={() => validate(itr.problemId)}
                     />
                   )}
 
@@ -152,7 +214,12 @@ const ListsPage = () => {
                 );
               })} */}
                 </div>
-                <DeleteOutlineIcon className="myListDeleteIcon" />
+                <DeleteOutlineIcon
+                  onClick={(e) =>
+                    deleteProblemFromList(e, itr.problemId, currentId)
+                  }
+                  className="myListDeleteIcon"
+                />
               </div>
             );
           })}
