@@ -37,22 +37,16 @@ const ListsPage = () => {
 
     //console.log(idx.problems);
     setTitle(idx.listTitle);
-    //console.log(title);
-
     setArr(idx.problems);
-    //console.log(arr);
   };
 
   const fetchLists = async () => {
-    const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
-    //console.log(a);
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-
-    const { data } = await axios.post(`/api/getListForHomePage/${a}`, config);
+    const { data } = await axios.post(`/api/getListForHomePage/${cook}`, config);
     setList(data.listArray);
     setCompleted(data.solvedArray);
   };
@@ -75,7 +69,7 @@ const ListsPage = () => {
   const createListHandler = async () => {
     //console.log("crea list");
     const t = name;
-    const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
+    // const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
     const config = {
       headers: {
         "Content-type": "application/json",
@@ -84,7 +78,7 @@ const ListsPage = () => {
     const { data } = await axios.post(
       "/api/createList",
       {
-        userId: a,
+        userId: cook,
         title: t,
       },
       config
@@ -92,8 +86,6 @@ const ListsPage = () => {
     fetchLists();
   };
   const deleteProblemFromList = async (event, problemId, listId) => {
-    const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
-    // console.log(a);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -107,14 +99,15 @@ const ListsPage = () => {
   };
   const validate = async (id) => {
     //console.log("validation");
-    const a = JSON.parse(localStorage.getItem("userInfo"));
-    const kk = a.data._id;
+    // const a = JSON.parse(localStorage.getItem("userInfo"));
+    // const kk = a.data._id;
     const config = {
       headers: {
         "Content-type": "application/json",
       },
     };
-    const d = await axios.post(`/api/markProblem/${kk}/${id}`, config);
+    // kk is replaced by cook
+    const d = await axios.post(`/api/markProblem/${cook}/${id}`, config);
     let v = d.data.value;
 
     if (d) {
@@ -130,12 +123,9 @@ const ListsPage = () => {
     functionSetter(id);
   };
   useEffect(() => {
-    const cook = cookie.get("token");
     if (!cook) {
-      if (alert("Not allwoed"))
-        navigate('/login');
+      navigate('/login');
     }
-    // getSolvedProblems();
     fetchLists();
   }, []);
   return (

@@ -1,7 +1,8 @@
 const User = require("../models/User");
 const Problem = require("../models/Problem");
+const jwt = require('jsonwebtoken');
 module.exports.checker = async (req, res) => {
-  const userId = req.body.userId;
+  const userId = jwt.verify(req.body.token, process.env.token_secret_key)._id;
   const problemId = req.body.problemId;
   console.log(typeof problemId);
   // return res.status(201).send(typeof problemId);
@@ -26,7 +27,7 @@ module.exports.checker = async (req, res) => {
 };
 
 module.exports.findIfSolved = async (req, res) => {
-  const userId = req.body.userId;
+  const userId = jwt.verify(req.body.token, process.env.token_secret_key)._id;
   const problemId = req.body.problemId;
   console.log(typeof problemId);
   // return res.status(201).send(typeof problemId);

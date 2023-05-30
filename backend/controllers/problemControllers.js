@@ -1,5 +1,6 @@
 const Problem = require("../models/Problem");
 const User = require("../models/User");
+const jwt = require('jsonwebtoken');
 module.exports.addProblem = async (req, res) => {
   const { difficulty, desc, link, tag } = req.body;
   const x = await Problem.create({ difficulty, desc, link, tag });
@@ -17,11 +18,9 @@ module.exports.addProblem = async (req, res) => {
   }
 };
 module.exports.findAllProblems = async (req, res) => {
-  // const y = req.params.id;
-  // console.log(y);
 
   try {
-    const y = req.params.id;
+    const y = jwt.verify(req.params.token, process.env.token_secret_key)._id;
     let x = await Problem.find();
     const arr = await User.findOne({ _id: y });
     console.log(y);
@@ -45,7 +44,7 @@ module.exports.findAllProblems = async (req, res) => {
 module.exports.checker = async (req, res) => {
   // return res.status(201).send(typeof problemId);
   try {
-    const userId = req.params.id;
+    const userId = jwt.verify(req.params.token, process.env.token_secret_key)._id;
     const problemId = req.params.pid;
     console.log(typeof problemId);
     console.log(userId);

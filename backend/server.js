@@ -118,7 +118,7 @@ app.post('/api/register', (req, res) => {
 app.post("/api/verify", (req, res) => {
   console.log(req.cookies);
   const cook = req.cookies.token;
-  const _id = jwt.verify(token, process.env.token_secret_key)._id;
+  const _id = jwt.verify(req.body.token, process.env.token_secret_key)._id;
   User.findOne({ _id: _id, }, (err, data) => {
     if (err)
       res.status(501);

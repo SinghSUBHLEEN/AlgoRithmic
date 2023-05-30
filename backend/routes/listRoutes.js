@@ -8,6 +8,6 @@ router.post(
   "/deleteProblemFromList/:listId/:problemId",
   listController.deleteProblemFromList
 );
-router.post("/getList/:id", listController.getList);
-router.post("/getListForHomePage/:id", listController.getListForHomePage);
+router.post("/getList/:token", listController.getList);
+router.post("/getListForHomePage/:token", listController.getListForHomePage);
 module.exports = router;

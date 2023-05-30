@@ -33,7 +33,6 @@ export default function Register() {
         throw (res);
       }
       else {
-        localStorage.setItem("userInfo", JSON.stringify(res));
         navigate('/')
       }
     }).catch(err => {

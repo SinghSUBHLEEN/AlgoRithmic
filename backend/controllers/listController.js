@@ -2,8 +2,9 @@ const List = require("../models/List");
 const Problem = require("../models/Problem");
 const User = require("../models/User");
 const { findByIdAndDelete } = require("../models/User");
+const jwt = require('jsonwebtoken')
 module.exports.createList = async (req, res) => {
-  const id = req.body.userId;
+  const id = jwt.verify(req.body.userId, process.env.token_secret_key)._id;
   const t = req.body.title;
   console.log(id);
   console.log(t);
@@ -35,7 +36,6 @@ module.exports.addToList = async (req, res) => {
           desc: y.desc,
           difficulty: y.difficulty,
           tag: y.tag,
-          checkedBy: y.checkedBy,
         });
         x = await x.save();
         res.status(201).json("problem added to this list");
@@ -72,7 +72,7 @@ module.exports.deleteProblemFromList = async (req, res) => {
 };
 
 module.exports.getList = async (req, res) => {
-  const id = req.params.id;
+  const id = jwt.verify(req.params.token, process.env.token_secret_key)._id;
   let x = await List.find({ createdBy: id });
 
   if (x) {
@@ -83,7 +83,7 @@ module.exports.getList = async (req, res) => {
 };
 
 module.exports.getSolved = async (req, res) => {
-  const id = req.params.id;
+  const id = jwt.token(req.params.id, process.env.token_secret_key)._id;
   let x = await User.findOne({ _id: id });
   if (x) {
     res.status(201).json(x.list);
@@ -92,7 +92,7 @@ module.exports.getSolved = async (req, res) => {
 
 module.exports.getListForHomePage = async (req, res) => {
   try {
-    const y = req.params.id;
+    const y = jwt.verify(req.params.token, process.env.token_secret_key)._id;
     let x = await List.find({ createdBy: y }); //listCollection
     const arr = await User.findOne({ _id: y }); //solved array
     console.log(y);

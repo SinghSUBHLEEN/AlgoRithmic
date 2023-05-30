@@ -1,7 +1,8 @@
 const Check = require("../models/Check");
 const Problem = require("../models/Problem");
+const jwt = require("jsonwebtoken");
 module.exports.createCheck = async (req, res) => {
-  const id = req.body.userId;
+  const id = jwt.verify(req.body.token, process.env.token_secret_key)._id;
   const x = await Check.create({ createdBy: id });
   if (x) {
     res.status(201).json(x);
@@ -10,7 +11,7 @@ module.exports.createCheck = async (req, res) => {
   }
 };
 module.exports.getCheck = async (req, res) => {
-  const id = req.body.userId;
+  const id = jwt.verify(req.body.token, process.env.token_secret_key)._id;
   const x = await Check.find({ createdBy: id });
   if (x) {
     res.status(201).json(x);
