@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Tab from "react-bootstrap/Tab";
-
+import cookie from 'js-cookie';
 import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
@@ -48,6 +48,8 @@ export default function Grid(props) {
     setList(data);
     console.log(data);
   };
+
+  const cook = cookie.get('token');
 
   // const validate = async (id) => {
   //   try {
@@ -206,8 +208,7 @@ export default function Grid(props) {
     console.log(y);
   };
   useEffect(() => {
-    fetchLists();
-    fetcher();
+    if (cook) fetchLists();
   }, []);
 
   const printer = async (id) => {
@@ -227,6 +228,96 @@ export default function Grid(props) {
   const functtt = async () => {
     console.log("this is another function");
   };
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const [data, setData] = useState([]);
+
+  const [count, setCount] = useState({ easy: 0, medium: 0, hard: 0 });
+
+  const getProblemsByTag = () => {
+    axios.post('/api/getProblemsByTag', { tag: props.top }).then((res) => {
+      console.log(res);
+      console.log(res.data.arr);
+      setData(res.data.arr);
+      props.setTotal(res.data.total);
+    }).catch(err => console.log(err))
+  }
+
+  const getProblemsByTagAndId = () => {
+    axios.post('/api/getProblemsByTagAndId', { tag: props.top, token: cook }).then((res) => {
+      console.log(res);
+      setCount(res.data.count);
+      setData(res.data.arr);
+      props.setTotal(res.data.total);
+      props.setCount(res.data.count);
+    }).catch(err => console.log(err))
+  }
+
+  const handleCheck = (event) => {
+    if (!cook) {
+      let temp = data;
+      const obj = count;
+      temp[event.taret.name].flag = event.target.value;
+      if (!event.target.checked) {
+        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
+          obj.medium = obj.medium - 1;
+        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard")
+          obj.hard = obj.hard - 1;
+        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy")
+          obj.easy = obj.easy - 1;
+      }
+      else {
+        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
+          obj.medium = obj.medium + 1;
+        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard")
+          obj.hard = obj.hard + 1;
+        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy")
+          obj.easy = obj.easy + 1;
+      }
+      setCount(obj);
+      props.setCount(count);
+    }
+    else {
+      let temp = data;
+      const obj = count;
+      if (!event.target.checked) {
+        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
+          obj.medium = obj.medium - 1;
+        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard")
+          obj.hard = obj.hard - 1;
+        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy")
+          obj.easy = obj.easy - 1;
+      }
+      else {
+        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
+          obj.medium = obj.medium + 1;
+        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard")
+          obj.hard = obj.hard + 1;
+        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy")
+          obj.easy = obj.easy + 1;
+      }
+      console.log(event.target.checked);
+      temp[event.target.name].flag = event.target.value;
+      setCount(obj);
+      props.setCount(count);
+      axios.post('/api/handleUpdate', { problemId: temp[event.target.name]._id, token: cook }).then((res) => {
+        setData(temp);
+        console.log(obj);
+      }).catch(err => console.log(err));
+    }
+  }
+
+
+  useEffect(() => {
+    if (cook)
+      getProblemsByTagAndId();
+    else
+      getProblemsByTag();
+  }, []);
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
   return (
     <>
@@ -249,41 +340,26 @@ export default function Grid(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {pl.map((it) => {
-            if (props.top != it.tag)
+          {data.map((it, idx) => {
+            if (Object.keys(it).length === 0 || props.top !== it.tag)
               return <></>
             else {
-              <TableRow key={it._id}>
+              let badge = "success";
+              if (it.difficulty === "medium" || it.difficulty === "Medium")
+                badge = "warning";
+              else if (it.difficulty === "hard" || it.difficulty === "Hard")
+                badge = "danger";
+              return (<TableRow key={it._id}>
                 <td>
-                  {/* <Check
+
+                  <Form.Check
                     type="checkbox"
-                    name="rem"
-                    defaultChecked={true}
-                    className="bg-inherit"
-                    size="lg"
-                  /> */}
-                  {/* {console.log(typeof it._id)}
-                  {myMap[it._id] === 1 ? (
-                    <CheckBoxIcon />
-                  ) : (
-                    <CheckBoxOutlineBlankIcon />
-                  )} */}
+                    name={idx}
+                    defaultChecked={it.flag}
+                    onChange={handleCheck}
+                  ></Form.Check>
 
                   {/* {done.find((c) => c === it._id) ? (
-                    <CheckIcon
-                      className="gridElementFullBox"
-                      onClick={() => validate(it._id)}
-                    />
-                  ) : (
-                    <Check
-                      type="checkbox"
-                      name="rem"
-                      className="bg-inherit"
-                      size="lg"
-                      onClick={() => validate(it._id)}
-                    />
-                  )} */}
-                  {/*{done.find((c) => c === it._id) ? (
                     <Check
                       type="checkbox"
                       name="rem"
@@ -301,29 +377,14 @@ export default function Grid(props) {
                       onClick={() => validate(it._id)}
                     />
                   )} */}
-                  {done.find((c) => c === it._id) ? (
-                    <Check
-                      type="checkbox"
-                      name="rem"
-                      defaultChecked={true}
-                      className="bg-inherit"
-                      size="lg"
-                      onClick={() => validate(it._id)}
-                    />
-                  ) : (
-                    <Check
-                      type="checkbox"
-                      name="rem"
-                      className="bg-inherit"
-                      size="lg"
-                      onClick={() => validate(it._id)}
-                    />
-                  )}
+
+
+
                 </td>
                 <td>
                   <Badge bg={badge}>{it.difficulty}</Badge>
                 </td>
-                <td>{it.desc}</td>
+                <td><a href={it.link} className='desc'>{it.desc}</a></td>
                 <td>
                   <Dropdown as={ButtonGroup}>
                     <Checkbox
@@ -375,7 +436,7 @@ export default function Grid(props) {
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
-              </TableRow>
+              </TableRow>)
             }
           })}
         </TableBody>

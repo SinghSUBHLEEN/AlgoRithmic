@@ -1,6 +1,6 @@
 .title {
   font-size: large;
-  margin-top: 0.3rem;
+  margin-top: 1.15rem;
 }
 
 .accordion-button {
@@ -47,4 +47,13 @@
 .zucc:hover {
   cursor: pointer;
   color: skyblue;
+}
+
+.pg-top {
+
+  margin-bottom: 0.1rem;
+}
+
+.pg-bottom {
+  margin-top: 0.1rem;
 }

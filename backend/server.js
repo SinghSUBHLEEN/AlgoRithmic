@@ -133,18 +133,38 @@ app.post("/api/verify", (req, res) => {
 
 app.post("/api/getProblemsByTag", (req, res) => {
   const { tag } = req.body;
+  const ans = [{
+    difficulty: String, _id: String, tag: String, desc: String, link: String, flag: Boolean
+  }];
+  const totalvalues = { easy: Number, medium: Number, hard: Number };
+  totalvalues.easy = 0;
+  totalvalues.medium = 0;
+  totalvalues.hard = 0;
   Problem.find({ tag: tag }, (err, data) => {
     if (err) res.status(501).json({ error: "Something went wrong" });
     else {
-      console.log(data);
-      data.flag = false;
-      res.status(201).json({ arr: data });
+      for (let i = 0; i < data.length; i += 1) {
+        const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
+        if (data[i].difficulty === "Hard" || data[i].difficulty === "hard")
+          totalvalues.hard = totalvalues.hard + 1;
+        else if (data[i].difficulty === "Medium" || data[i].difficulty === "Medium")
+          totalvalues.medium = totalvalues.medium + 1;
+        else if (data[i].difficulty === "Easy" || data[i].difficulty === "easy")
+          totalvalues.easy = totalvalues.easy + 1;
+      }
+      ans.push(obj);
     }
-  })
+    res.status(201).json({ error: "", arr: ans, total: totalvalues });
+  });
 });
 
 app.post('/api/getProblemsByTagAndId', (req, res) => {
   const { tag, token } = req.body;
+  const values = { easy: Number, medium: Number, hard: Number };
+  const totalvalues = { easy: Number, medium: Number, hard: Number };
+  values.easy = totalvalues.easy = 0;
+  values.medium = totalvalues.medium = 0;
+  values.hard = totalvalues.hard = 0;
   let ispresent = new Array();
   const userid = jwt.verify(token, process.env.token_secret_key)._id;
   console.log(req.body);
@@ -156,19 +176,31 @@ app.post('/api/getProblemsByTagAndId', (req, res) => {
     else {
       for (let i = 0; i < data.length; i += 1) {
         const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
-        if (data[i].checkedBy.get(userid))
-          ispresent.push(data[i]._id);
+        if (data[i].checkedBy.get(userid)) {
+          if (data[i].difficulty === "Hard" || data[i].difficulty === "hard")
+            values.hard = values.hard + 1;
+          else if (data[i].difficulty === "Medium" || data[i].difficulty === "Medium")
+            values.medium = values.medium + 1;
+          else if (data[i].difficulty === "Easy" || data[i].difficulty === "easy")
+            values.easy = values.easy + 1;
+          obj.flag = true;
+        }
+        if (data[i].difficulty === "Hard" || data[i].difficulty === "hard")
+          totalvalues.hard = totalvalues.hard + 1;
+        else if (data[i].difficulty === "Medium" || data[i].difficulty === "Medium")
+          totalvalues.medium = totalvalues.medium + 1;
+        else if (data[i].difficulty === "Easy" || data[i].difficulty === "easy")
+          totalvalues.easy = totalvalues.easy + 1;
+
         ans.push(obj);
       }
-      res.status(201).json({ error: "", arr: ans, check: ispresent });
+      res.status(201).json({ error: "", arr: ans, count: values, total: totalvalues });
     }
   })
 });
 
 app.post('/api/handleUpdate', (req, res) => {
   const { problemId, token } = req.body;
-  const arr1 = [];
-  const arr2 = [];
   const userid = jwt.verify(token, process.env.token_secret_key)._id;
   console.log(userid);
   Problem.findOne({ _id: problemId }, (err, data) => {
@@ -192,17 +224,15 @@ app.post('/api/handleUpdate', (req, res) => {
         if (err)
           res.status(501).json({ error: "Something went wrong" });
         else {
-          res.status(201).json({ message: "Done", error: "", arr });
+          res.status(201).json({ message: "Done", error: "" });
         }
       })
     }
   })
 })
 
-// let m = new Map();
-// m.set("check", 1);
 
-// Problem.create({ difficulty: "Hard", desc: "Number of Great Partitions", link: "https://leetcode.com/problems/number-of-great-partitions/", tag: "Dynamic Programming", checkedBy: m }, (err, data) => {
+// Problem.create({ difficulty: "Easy", desc: "Distribute Money to Maximum Children", link: "https://leetcode.com/problems/distribute-money-to-maximum-children/", tag: "Greedy", checkedBy: new Array() }, (err, data) => {
 //   if (err) console.log(err);
 //   else {
 //     console.log(data);
