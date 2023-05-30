@@ -23,7 +23,7 @@ app.use("/api", problemRoutes);
 app.use("/api", userRoutes);
 app.use("/api", listRoutes);
 app.use("/api", checkRoutes);
-app.listen(5000, () => {
+app.listen(5000 || process.env.PORT, () => {
   console.log("Listening at port 5000");
 });
 // const app = express();
