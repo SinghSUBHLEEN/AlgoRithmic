@@ -2,39 +2,20 @@ import { Dropdown, ButtonGroup } from "react-bootstrap";
 import "./grid.css";
 import { useState, useEffect } from "react";
 import Badge from "react-bootstrap/Badge";
-import Check from "react-bootstrap/FormCheckInput";
 import axios from "axios";
-import Col from "react-bootstrap/Col";
-import Nav from "react-bootstrap/Nav";
-import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Tab from "react-bootstrap/Tab";
 import cookie from 'js-cookie';
 import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import CheckIcon from "@mui/icons-material/Check";
 export default function Grid(props) {
   const [list, setList] = useState([]);
-  const [arr, setArr] = useState([]);
-  const [pl, setPl] = useState([]);
-  const [done, setDone] = useState([]);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  // const x = props.l;
-  // console.log(x);
+  const cook = cookie.get('token');
   const [name, setName] = useState("");
-  const [badge, setBadge] = useState("sucess");
-  let completed = [];
-  let personId;
-  const func = (str) => {
-    if (str === "Medium") setBadge("warning");
-    else if (str === "Hard") setBadge("danger");
-    else setBadge("success");
-  };
+
   const fetchLists = async () => {
     const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
     console.log(a);
@@ -44,40 +25,10 @@ export default function Grid(props) {
       },
     };
 
-    const { data } = await axios.post(`/api/getList/${a}`, config);
+    const { data } = await axios.post(`/api/getList/${cook}`, config);
     setList(data);
     console.log(data);
   };
-
-  const cook = cookie.get('token');
-
-  // const validate = async (id) => {
-  //   try {
-  //     //console.log("validation");
-  //     const a = JSON.parse(localStorage.getItem("userInfo"));
-  //     const kk = a.data._id;
-  //     const config = {
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //     };
-  //     const d = await axios.post(
-  //       "/api/findIfSolved",
-  //       {
-  //         userId: kk,
-  //         problemId: id,
-  //       },
-  //       config
-  //     );
-  //     let v = d.data.value;
-  //     //console.log(v);
-  //     //console.log("type of v is " + typeof v);
-  //     //console.log(d);
-  //     return v;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   const createListHandler = async () => {
     console.log("crea list");
     const t = name;
@@ -87,7 +38,7 @@ export default function Grid(props) {
         "Content-type": "application/json",
       },
     };
-    const { data } = await axios.post(
+    const val = await axios.post(
       "/api/createList",
       {
         userId: a,
@@ -111,122 +62,6 @@ export default function Grid(props) {
       config
     );
     console.log(data);
-  };
-
-  const fetcher = async () => {
-    const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
-    console.log(a);
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const { data } = await axios.get(`/api/getProblems/${a}`, config);
-    console.log(data);
-    setPl(data.problemsArray);
-    setDone(data.userList);
-    console.log(pl);
-  };
-  const validate = async (id) => {
-    try {
-      //console.log("validation");
-      const a = JSON.parse(localStorage.getItem("userInfo"));
-      const kk = a.data._id;
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const d = await axios.post(`/api/markProblem/${kk}/${id}`, config);
-      let v = d.data.value;
-      //console.log(v);
-      fetcher();
-      //console.log("type of v is " + typeof v);
-      //console.log(d);
-      return v;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchProblems = async () => {
-    try {
-      const a = JSON.parse(localStorage.getItem("userInfo"));
-      console.log(a);
-
-      const kk = a.data._id;
-      console.log(kk);
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { d } = await axios.get(
-        "/api/getProblems",
-        {
-          userId: kk,
-        },
-        config
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const checkHandler = async (questionId) => {
-    try {
-      console.log("this is checkHandler");
-
-      const a = JSON.parse(localStorage.getItem("userInfo"));
-      const kk = a.data._id;
-
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { d } = await axios.post(
-        "/api/markProblem",
-        {
-          userId: kk,
-          problemId: questionId,
-        },
-        config
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  let comp;
-  let flag = 0;
-  if (completed.lenth > 0) {
-    flag = 1;
-  }
-  const caller = (y) => {
-    console.log("this is calller function");
-
-    console.log(y);
-  };
-  useEffect(() => {
-    if (cook) fetchLists();
-  }, []);
-
-  const printer = async (id) => {
-    console.log(typeof id);
-    console.log(JSON.stringify(id));
-    const a = JSON.stringify(id);
-    console.log(a);
-  };
-
-  const [p, setP] = useState([]);
-
-  const typo = (x, y) => {
-    console.log("here");
-    console.log(x);
-    console.log(y);
-  };
-  const functtt = async () => {
-    console.log("this is another function");
   };
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -258,7 +93,7 @@ export default function Grid(props) {
     if (!cook) {
       let temp = data;
       const obj = count;
-      temp[event.taret.name].flag = event.target.value;
+      temp[event.target.name].flag = event.target.value;
       if (!event.target.checked) {
         if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
           obj.medium = obj.medium - 1;
@@ -310,8 +145,10 @@ export default function Grid(props) {
 
 
   useEffect(() => {
-    if (cook)
+    if (cook) {
       getProblemsByTagAndId();
+      fetchLists();
+    }
     else
       getProblemsByTag();
   }, []);
@@ -358,28 +195,6 @@ export default function Grid(props) {
                     defaultChecked={it.flag}
                     onChange={handleCheck}
                   ></Form.Check>
-
-                  {/* {done.find((c) => c === it._id) ? (
-                    <Check
-                      type="checkbox"
-                      name="rem"
-                      defaultChecked={true}
-                      className="bg-inherit"
-                      size="lg"
-                      onClick={() => validate(it._id)}
-                    />
-                  ) : (
-                    <Check
-                      type="checkbox"
-                      name="rem"
-                      className="bg-inherit"
-                      size="lg"
-                      onClick={() => validate(it._id)}
-                    />
-                  )} */}
-
-
-
                 </td>
                 <td>
                   <Badge bg={badge}>{it.difficulty}</Badge>

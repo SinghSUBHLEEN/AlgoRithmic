@@ -151,8 +151,9 @@ app.post("/api/getProblemsByTag", (req, res) => {
           totalvalues.medium = totalvalues.medium + 1;
         else if (data[i].difficulty === "Easy" || data[i].difficulty === "easy")
           totalvalues.easy = totalvalues.easy + 1;
+        ans.push(obj);
       }
-      ans.push(obj);
+
     }
     res.status(201).json({ error: "", arr: ans, total: totalvalues });
   });
