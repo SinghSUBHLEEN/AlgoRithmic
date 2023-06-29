@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require('path');
 require("dotenv").config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -16,7 +17,7 @@ const User = require("./models/User");
 const Problem = require('./models/Problem');
 const { Router } = require("express");
 const router = Router();
-
+app.use(express.static(__dirname + '/frontend/build'));
 app.use(express.json());
 app.use(cookie());
 app.use("/api", problemRoutes);
@@ -29,6 +30,10 @@ app.listen(5000 || process.env.PORT, () => {
 // const app = express();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
+})
 
 app.post('/api/login', (req, res) => {
   const { email, password, rem } = req.body;
