@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import MyList from "../ViewLists/ListsPage";
 import cookie from "js-cookie";
 
-export default function Protected() {
+export default function Protected(props) {
 
     const navigate = useNavigate();
     const cook = cookie.get("token");
@@ -18,21 +18,13 @@ export default function Protected() {
                     return;
             }).catch(err => {
                 console.log(err)
-                // if (res.status === 501) {
-                //     if (alert("Something went wrong"))
-                //         navigate('/login');
-                // }
-                // else if (res.status === 400) {
-                //     if (alert("Login sessin expired due to invalid cookies"))
-                //         navigate('/login');
-                // }
             });
         }
     });
 
     return (
         <>
-            <MyList />
+            <props.component />
         </>
     );
 }

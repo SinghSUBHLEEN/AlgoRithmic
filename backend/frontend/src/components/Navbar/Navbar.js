@@ -10,6 +10,8 @@ const Navbar = (props) => {
   const navigate = useNavigate();
   const deleteCookie = () => {
     cookie.remove("token");
+    cookie.remove("fname");
+    cookie.remove("lname");
     navigate('/login');
   }
 
@@ -21,6 +23,10 @@ const Navbar = (props) => {
 
   const homeF = () => {
     navigate('/');
+  }
+
+  const roadF = () => {
+    navigate('/road');
   }
 
   const registerF = () => {
@@ -36,7 +42,7 @@ const Navbar = (props) => {
   }
 
   return (
-    <NavbarB collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <NavbarB collapseOnSelect expand="lg" sticky="top" className="color-nav" variant="dark" bg='info'>
       <Container>
         <NavbarB.Brand onClick={homeF} className=".an">Algorithmic</NavbarB.Brand>
         <NavbarB.Toggle aria-controls="responsive-navbar-nav" />
@@ -44,6 +50,7 @@ const Navbar = (props) => {
           <Nav className="me-auto">
             <Nav.Link onClick={homeF}>Roadmap</Nav.Link>
             <Nav.Link onClick={problemF}>Problems</Nav.Link>
+            <Nav.Link onClick={roadF}>Road</Nav.Link>
           </Nav>
           <Nav>
             {props.hide ? <></> : (<NavDropdown title="Profile" id="collasible-nav-dropdown">

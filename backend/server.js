@@ -31,9 +31,9 @@ app.listen(5000 || process.env.PORT, () => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
-})
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
+// })
 
 app.post('/api/login', (req, res) => {
   const { email, password, rem } = req.body;
@@ -61,7 +61,8 @@ app.post('/api/login', (req, res) => {
               res.status(501).json({ error: "Something went wrong" });
             }
             else {
-              const token = jwt.sign({ _id: data._id }, process.env.token_secret_key);
+              const token = jwt.sign({ _id: data._id, fname: data.fname, lname: data.lname }, process.env.token_secret_key);
+              const fname = data.fname, lname = data.lname;
               if (!val)
                 res.status(400).json({ error: "Wrong password" });
               else {
@@ -69,7 +70,7 @@ app.post('/api/login', (req, res) => {
                 if (rem === 'on') {
                   options = { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) };
                 }
-                res.status(201).cookie("token", token, options).json({ _id: data._id, message: "Logged in", error: "", token: token });
+                res.status(201).cookie("token", token, options).cookie("fname", fname, options).cookie("lname", lname, options).json({ _id: data._id, message: "Logged in", error: "", token: token, fname: data.fname, lname: data.lname });
               }
 
             }
@@ -79,6 +80,14 @@ app.post('/api/login', (req, res) => {
     });
   }
 });
+
+app.post('/api/getinfo', (req, res) => {
+  const obj = new Object();
+  const o = jwt.verify(req.body.token, process.env.token_secret_key);
+  obj.fname = o.fname;
+  obj.lname = o.lname;
+  res.json({ user_info: obj });
+})
 
 app.post('/api/register', (req, res) => {
   console.log(req.body);
@@ -105,12 +114,13 @@ app.post('/api/register', (req, res) => {
               if (err)
                 res.status(501).json({ error: "Cannot create user right now, please try again later" });
               else {
-                const token = jwt.sign({ _id: data._id }, process.env.token_secret_key);
+                const token = jwt.sign({ _id: data._id, fname: data.fname, lname: data.lname }, process.env.token_secret_key);
+                const fname = data.fname, lname = data.lname;
                 let options;
                 if (rem === 'on') {
                   options = { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) };
                 }
-                res.status(201).cookie("token", token, options).json({ _id: data._id, message: "Logged in", error: "", token: token });
+                res.status(201).cookie("token", token, options).cookie("fname", fname, options).cookie("lname", lname, options).json({ _id: data._id, message: "Logged in", error: "", token: token, fname: data.fname, lname: data.lname });
               }
             });
           }
@@ -138,6 +148,7 @@ app.post("/api/verify", (req, res) => {
 
 app.post("/api/getProblemsByTag", (req, res) => {
   const { tag } = req.body;
+  console.log(tag);
   const ans = [{
     difficulty: String, _id: String, tag: String, desc: String, link: String, flag: Boolean
   }];
@@ -173,7 +184,7 @@ app.post('/api/getProblemsByTagAndId', (req, res) => {
   values.hard = totalvalues.hard = 0;
   let ispresent = new Array();
   const userid = jwt.verify(token, process.env.token_secret_key)._id;
-  console.log(req.body);
+  console.log(req.body.tag);
   const ans = [{
     difficulty: String, _id: String, tag: String, desc: String, link: String, flag: Boolean
   }];

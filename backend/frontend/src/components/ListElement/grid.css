@@ -1,8 +1,17 @@
 .heading {
   font-size: 1.4rem;
-  font-variant: small-caps;
+  /* font-variant: small-caps; */
   color: ghostwhite;
   text-align: left;
+}
+
+.custom-table {
+  background-color: #1A2228;
+}
+
+.custom-button {
+  box-shadow: none;
+  /* border-radius: 20%; */
 }
 
 .gridElementFullBox {

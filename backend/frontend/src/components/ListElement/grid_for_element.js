@@ -10,6 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
+
 export default function Grid(props) {
   const cook = cookie.get('token');
   const [list, setList] = useState([]);
@@ -103,19 +104,26 @@ export default function Grid(props) {
       if (!event.target.checked) {
         if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
           obj.medium = obj.medium - 1;
-        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard")
+
+        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
           obj.hard = obj.hard - 1;
-        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy")
+        }
+        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
           obj.easy = obj.easy - 1;
+        }
       }
       else {
-        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
+        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
           obj.medium = obj.medium + 1;
-        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard")
+        }
+        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
           obj.hard = obj.hard + 1;
-        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy")
+        }
+        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
           obj.easy = obj.easy + 1;
+        }
       }
+
       setCount(obj);
       props.setCount(count);
     }
@@ -123,20 +131,36 @@ export default function Grid(props) {
       let temp = data;
       const obj = count;
       if (!event.target.checked) {
-        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
+        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
           obj.medium = obj.medium - 1;
-        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard")
+          console.log("reaches");
+
+        }
+        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
           obj.hard = obj.hard - 1;
-        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy")
+          console.log("reaches");
+
+        }
+        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
           obj.easy = obj.easy - 1;
+          console.log("reaches");
+
+        }
       }
       else {
-        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
+        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
           obj.medium = obj.medium + 1;
-        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard")
+          console.log("reaches");
+
+        }
+        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
           obj.hard = obj.hard + 1;
-        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy")
+
+        }
+        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
           obj.easy = obj.easy + 1;
+
+        }
       }
       console.log(event.target.checked);
       temp[event.target.name].flag = event.target.value;
@@ -162,9 +186,9 @@ export default function Grid(props) {
 
 
   return (
-    <>
+    <div className="table-back">
       <Table
-        className="table rounded table-light table-hover table-striped"
+        className="table table-hover custom-table" variant="dark"
         responsive="sm"
       >
         <TableHead className="thead-dark">
@@ -201,32 +225,11 @@ export default function Grid(props) {
                     onChange={handleCheck}
                   ></Form.Check>
 
-                  {/* {done.find((c) => c === it._id) ? (
-                    <Check
-                      type="checkbox"
-                      name="rem"
-                      defaultChecked={true}
-                      className="bg-inherit"
-                      size="lg"
-                      onClick={() => validate(it._id)}
-                    />
-                  ) : (
-                    <Check
-                      type="checkbox"
-                      name="rem"
-                      className="bg-inherit"
-                      size="lg"
-                      onClick={() => validate(it._id)}
-                    />
-                  )} */}
-
-
-
                 </td>
                 <td>
                   <Badge bg={badge}>{it.difficulty}</Badge>
                 </td>
-                <td><a href={it.link} className='desc'>{it.desc}</a></td>
+                <td><Button className="custom-button cicular" href={it.link} target="_blanck" variant="light">{it.desc}</Button></td>
                 <td>
                   <Dropdown as={ButtonGroup}>
                     <Checkbox
@@ -236,13 +239,6 @@ export default function Grid(props) {
                     />
                     <Dropdown.Toggle variant="link" id="dropdown-split-basic" />
                     <Dropdown.Menu className="gridElementDropdownWrapper">
-                      {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">
-                        Another action
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">
-                        Something else
-                      </Dropdown.Item> */}
                       {list.map((itr) => {
                         return (
                           <div
@@ -260,7 +256,7 @@ export default function Grid(props) {
                       <Form className="gridElementCreateListSection">
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Control
-                            type="email"
+                            type="text"
                             placeholder="Enter Name"
                             className="gridElementCreateListTextField"
                             onChange={(e) => setName(e.target.value)}
@@ -283,6 +279,6 @@ export default function Grid(props) {
           })}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 }

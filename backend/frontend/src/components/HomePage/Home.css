@@ -1,26 +1,42 @@
-.homePageTitle {
-    font-size: 1.5rem;
-    margin-left: 50px;
-    margin-top: 10px;
-    color: beige;
-    margin-bottom: 20px;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+.menu {
+    margin-right: auto;
+    margin-left: auto;
 }
 
-.rowsClassSubContainer {
-    color: rgb(233, 226, 226);
+.menu-heading {
+    color: ghostwhite;
+    font-weight: bold;
+    font-family: 'DM Sans', sans-serif;
+    justify-content: center;
+    text-align: center;
+    font-size: 2.5rem;
 
-    border: 1px solid rgb(72, 93, 72);
-    /* padding: 20px; */
 }
 
-.colsClassSubContainer {
-    padding: 20px;
-    font-size: 20px;
-    border: 1px solid rgb(72, 93, 72);
+.custom-menu-card {
+    box-shadow: none;
+    background-color: #262d33;
 }
 
-.colsClassSubContainer:hover {
-    cursor: pointer;
-    /* background-color: rgb(88, 88, 122); */
-    background-color: rgb(60, 91, 60);
+.menu-container {
+    justify-content: center;
+    background-color: #1B1B1B;
+    width: auto;
+    box-shadow: none;
+    margin-bottom: 1.5rem;
+}
+
+.custom-menu {
+    color: White;
+    justify-content: center;
+    font-size: x-large;
+}
+
+.welcome {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 2.7rem;
 }
