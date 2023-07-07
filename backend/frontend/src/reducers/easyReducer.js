@@ -1,4 +1,4 @@
-const initialEasyCount = 0;
+let initialEasyCount = 0;
 
 const changeEasyCount = (state = initialEasyCount, action) => {
     switch (action.type) {

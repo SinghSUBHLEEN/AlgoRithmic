@@ -10,12 +10,17 @@ import Checkbox from "@mui/material/Checkbox";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
+import { incrementEasyCount, incrementMediumCount, incrementHardCount, decrementEasyCount, decrementMediumCount, decrementHardCount, totalHardCount, totalEasyCount, totalMediumCount } from "../../actions/actions";
+
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Grid(props) {
   const cook = cookie.get('token');
   const [list, setList] = useState([]);
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [name, setName] = useState("");
+
+  const dispatch = useDispatch();
 
   const fetchLists = async () => {
     // const a = JSON.parse(localStorage.getItem("userInfo")).data._id;
@@ -92,6 +97,32 @@ export default function Grid(props) {
       setCount(res.data.count);
       setData(res.data.arr);
       props.setTotal(res.data.total);
+      let h = res.data.total.hard, m = res.data.total.medium, e = res.data.total.easy;
+      while (h > 0) {
+        dispatch(totalHardCount());
+        h -= 1;
+      }
+      while (e > 0) {
+        dispatch(totalEasyCount());
+        e -= 1;
+      }
+      while (m > 0) {
+        dispatch(totalMediumCount());
+        m -= 1;
+      }
+      let e1 = res.data.count.easy, m1 = res.data.count.medium, h1 = res.data.count.hard;
+      while (h1 > 0) {
+        dispatch(incrementHardCount());
+        h1 -= 1;
+      }
+      while (e1 > 0) {
+        dispatch(incrementEasyCount());
+        e1 -= 1;
+      }
+      while (m1 > 0) {
+        dispatch(incrementMediumCount());
+        m1 -= 1;
+      }
       props.setCount(res.data.count);
     }).catch(err => console.log(err))
   }
@@ -102,8 +133,9 @@ export default function Grid(props) {
       const obj = count;
       temp[event.target.name].flag = event.target.value;
       if (!event.target.checked) {
-        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium")
+        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
           obj.medium = obj.medium - 1;
+        }
 
         else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
           obj.hard = obj.hard - 1;
@@ -133,33 +165,30 @@ export default function Grid(props) {
       if (!event.target.checked) {
         if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
           obj.medium = obj.medium - 1;
-          console.log("reaches");
-
+          dispatch(decrementMediumCount());
         }
         else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
           obj.hard = obj.hard - 1;
-          console.log("reaches");
+          dispatch(decrementHardCount());
 
         }
         else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
           obj.easy = obj.easy - 1;
-          console.log("reaches");
-
+          dispatch(decrementEasyCount());
         }
       }
       else {
         if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
           obj.medium = obj.medium + 1;
-          console.log("reaches");
-
+          dispatch(incrementMediumCount());
         }
         else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
           obj.hard = obj.hard + 1;
-
+          dispatch(incrementHardCount());
         }
         else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
           obj.easy = obj.easy + 1;
-
+          dispatch(incrementEasyCount());
         }
       }
       console.log(event.target.checked);

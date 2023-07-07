@@ -38,4 +38,24 @@ export const decrementHardCount = () => {
         type: "HardCountDecrement",
 
     }
+}
+
+export const totalHardCount = () => {
+    return {
+        type: "HardTotalIncrement",
+
+    }
+}
+
+export const totalMediumCount = () => {
+    return {
+        type: "MediumTotalIncrement",
+
+    }
+}
+export const totalEasyCount = () => {
+    return {
+        type: "EasyTotalIncrement",
+
+    }
 } 
