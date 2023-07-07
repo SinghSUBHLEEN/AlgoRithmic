@@ -7,6 +7,13 @@ import { useNavigate } from "react-router-dom";
 import cookie from 'js-cookie';
 import { useSelector } from "react-redux";
 import { totalEasyCount } from "../../actions/actions";
+import {
+    CircularProgressbar,
+    CircularProgressbarWithChildren,
+    buildStyles
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+
 
 const Menu = (props) => {
 
@@ -35,6 +42,7 @@ const Menu = (props) => {
         setMode("graph");
     }
 
+    const percentage = 20;
 
     return <>
         <Row className="menu">
@@ -84,17 +92,30 @@ const Menu = (props) => {
                             <Container className="menu-heading">Progress</Container>
                         </Card.Header>
                         <Card.Body>
-                            <Card className="m-0 b-0 p-0 custom-menu-card" border="dark" style={{ width: '15rem', backgroundColor: "#262d33" }} onClick={handleList}>
+                            {/* <Card className="m-0 b-0 p-0 custom-menu-card" border="dark" style={{ width: '15rem', backgroundColor: "#262d33" }} onClick={handleList}>
+
+                            </Card> */}
+                            <Card className="m-0 b-0 p-0 custom-menu-card-2" border="dark" style={{ width: '15rem', backgroundColor: "#262d33" }} onClick={handleList}>
                                 <Card.Header className="m-0 b-0 p-0">
-                                    <ProgressBar className="custom-line-progress" variant="success" now={(easyCount / easyTotal) * 100} />
-                                    <ProgressBar className="custom-line-progress" variant="warning" now={(mediumCount / mediumTotal) * 100} />
-                                    <ProgressBar className="custom-line-progress" variant="danger" now={(hardCount / hardTotal) * 100} />
+                                    <Container className="custom-cprogress-container">
+                                        <CircularProgressbar className="cprogress" value={((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)} text={(((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)).toFixed(2) + "%"} styles={buildStyles({
+                                            textColor: "ghostwhite",
+                                            pathColor: "#2a9fd6"
+                                        })} strokeWidth={2.5} />
+
+                                    </Container>
+                                    <span className="progress-heading">Easy</span>
+                                    <ProgressBar className="custom-line-progress" variant="success" now={(easyCount / easyTotal) * 100} label={(easyCount / easyTotal) * 100 + "%"} />
+                                    <span className="progress-heading">Medium</span>
+                                    <ProgressBar className="custom-line-progress" variant="warning" now={((mediumCount / mediumTotal) * 100).toFixed(2)} label={((mediumCount / mediumTotal) * 100).toFixed(2) + "%"} />
+                                    <span className="progress-heading">Hard</span>
+                                    <ProgressBar className="custom-line-progress progress-hard" variant="danger" now={(hardCount / hardTotal) * 100} label={((hardCount / hardTotal) * 100).toFixed(2) + "%"} />
                                 </Card.Header>
                             </Card>
                         </Card.Body>
                     </Card>
-                </Col>
-            </Row>) : <></>}
+                </Col >
+            </Row >) : <></>}
     </>
 }
 
