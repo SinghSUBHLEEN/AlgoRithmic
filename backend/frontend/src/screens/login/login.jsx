@@ -1,5 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { Spinner, Alert } from "react-bootstrap";
+import ErrorIcon from '@mui/icons-material/Error';
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -17,12 +19,17 @@ export default function Login() {
 
   const [data, setData] = useState({ email: "", password: "", rem: 'off' });
 
+  const [click, setClick] = useState(false);
+
+  const [alert, setAlert] = useState("");
 
   const handleInput = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (event) => {
+    setClick(true);
+    setAlert("");
     event.preventDefault();
     axios.post("/api/login", data).then((res) => {
       // console.log(res.data);
@@ -31,15 +38,21 @@ export default function Login() {
       }
       else {
         navigate('/')
+        setClick(false);
+        setAlert("");
       }
     }).catch(err => {
+      setClick(false);
       if (err.response.status === 400 || err.response.status === 501) {
-        alert(err.response.data.error);
+        // alert(err.response.data.error);
+        setAlert(err.response.data.error);
       }
       else
         console.log(err);
     });
   };
+
+  const [show, setShow] = useState(true);
 
   const handleRegister = (event) => {
     navigate('/register');
@@ -84,7 +97,7 @@ export default function Login() {
               ></Form.Check>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Button
+              {!click ? <><Button
                 className="submit-button"
                 variant="primary"
                 value="submit"
@@ -92,16 +105,28 @@ export default function Login() {
                 onClick={handleSubmit}
               >
                 Sign in
-              </Button>
+              </Button></> : <><Button variant="primary" disabled>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                <span className="visually-hidden">Loading...</span>
+              </Button></>}
             </Form.Group>
             <Form.Group>
               <Form.Text>{str}
                 <a onClick={handleRegister} className="an"> Create here!</a>
               </Form.Text>
             </Form.Group>
+            {alert !== "" ? <><Alert style={{ backgroundColor: "rgba(203, 0, 0, 0.8)" }} className="m-3" key="danger"  >
+              <ErrorIcon></ErrorIcon>{"  "}{alert}
+            </Alert></> : <></>}
           </Form>
         </div>
-      </div>
+      </div >
     </>
   );
 }

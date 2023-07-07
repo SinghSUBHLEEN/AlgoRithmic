@@ -93,10 +93,10 @@ app.post('/api/register', (req, res) => {
   console.log(req.body);
   const { fname, lname, email, password, confirm_password, rem } = req.body;
   if (!email || !password || !fname || !confirm_password) {
-    return res.status(400).json({ error: "Please fill all the feilds" });
+    return res.status(400).json({ error: "Please fill all the feilds correctly" });
   }
   if (password !== confirm_password)
-    return res.status(400).json({ error: "Password does not match" });
+    return res.status(400).json({ error: "Password did not match" });
   User.findOne({ email: email }, (err, data) => {
     if (err)
       res.status(501).json({ error: "Something went wrong" });
@@ -108,7 +108,7 @@ app.post('/api/register', (req, res) => {
       else {
         bcrypt.hash(password, 10, (err, hash) => {
           if (err)
-            res.status(501).json({ error: "Something went wrong" });
+            res.status(501).json({ error: "Oops! Something went wrong" });
           else {
             User.create({ email: email, fname: fname, lname: lname, password: hash }, (err, data) => {
               if (err)

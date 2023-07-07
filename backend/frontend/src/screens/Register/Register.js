@@ -1,5 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { Spinner, Alert } from "react-bootstrap";
+import ErrorIcon from '@mui/icons-material/Error';
 import "./Register.css";
 import axios from "axios";
 import cookie from "js-cookie";
@@ -8,6 +10,10 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 export default function Register() {
   const navigate = useNavigate();
+
+  const [click, setClick] = useState(false);
+  const [alert, setAlert] = useState("");
+
   const cook = cookie.get('token');
   useEffect(() => {
     if (cook)
@@ -27,6 +33,8 @@ export default function Register() {
   };
 
   const handleSubmit = (event) => {
+    setClick(true);
+    setAlert("");
     event.preventDefault();
     axios.post("/api/register", data).then((res) => {
       if (res.status !== 201) {
@@ -34,10 +42,13 @@ export default function Register() {
       }
       else {
         navigate('/')
+        setClick(false);
+        setAlert("");
       }
     }).catch(err => {
+      setClick(false);
       if (err.response.status === 400 || err.response.status === 501) {
-        alert(err.response.data.error);
+        setAlert(err.response.data.error);
       }
       else
         console.log(err);
@@ -123,7 +134,7 @@ export default function Register() {
               ></Form.Check>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Button
+              {!click ? <><Button
                 className="submit-button"
                 variant="primary"
                 value="submit"
@@ -131,13 +142,25 @@ export default function Register() {
                 onClick={handleSubmit}
               >
                 Sign up
-              </Button>
+              </Button></> : <><Button variant="primary" disabled>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                <span className="visually-hidden">Loading...</span>
+              </Button></>}
             </Form.Group>
             <Form.Group>
               <Form.Text>{str}
                 <a onClick={loginF} className="an"> Sign in here!</a>
               </Form.Text>
             </Form.Group>
+            {alert !== "" ? <><Alert style={{ backgroundColor: "rgba(203, 0, 0, 0.8)" }} className="m-3" key="danger" variant="danger">
+              <ErrorIcon></ErrorIcon>{"  "}{alert}
+            </Alert></> : <></>}
           </Form>
         </div>
       </div>
