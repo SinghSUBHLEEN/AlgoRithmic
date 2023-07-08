@@ -2,6 +2,9 @@ import React, { memo, useState } from 'react';
 import { Handle, Position } from 'reactflow';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import Grid from "../ListElement/grid_for_element";
+import "./customNode.css";
+import { Container } from 'react-bootstrap';
 
 const handleNodeClick = (event) => {
     console.log("Node clicked " + event);
@@ -18,8 +21,7 @@ function CustomNode({ data }) {
         <>
             <span onClick={() => {
                 handleShow();
-                handleNodeClick(data.name);
-            }}>
+            }} className='span-hover'>
                 <div className="px-4 py-2 shadow-md rounded-md border-2 border-stone-400" style={{ backgroundColor: "#0039a6" }}>
                     <div className="flex">
                         <div className="ml-2">
@@ -31,15 +33,14 @@ function CustomNode({ data }) {
                     {data.name !== "Basics" ? <Handle type="target" position={Position.Top} className="w-16 !bg-teal-500" /> : <></>}
                 </div>
             </span>
-            <Offcanvas show={show} onHide={handleClose} end>
+            <Offcanvas show={show} onHide={handleClose} placement="end" styles={{ backgroundColor: "ghostwhite" }}>
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+                    <Offcanvas.Title>{data.name}</Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body>
-                    Some text as placeholder. In real life you can have the elements you
-                    have chosen. Like, text, images, lists, etc.
+                <Offcanvas.Body className='m-0 p-0 b-0'>
+                    <span className='m-1'><Grid top={data.name} /></span>
                 </Offcanvas.Body>
-            </Offcanvas>
+            </Offcanvas >
         </>
     );
 }

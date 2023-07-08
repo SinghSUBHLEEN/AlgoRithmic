@@ -1,3 +1,8 @@
-.button {
-    box-shadow: none;
+.span-hover:hover {
+    cursor: pointer;
+}
+
+.offcanvas {
+    width: 55% !important;
+    background-color: #1a1a1a;
 }

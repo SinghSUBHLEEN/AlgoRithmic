@@ -14,11 +14,12 @@
   /* border-radius: 20%; */
 }
 
+/* 
 .gridElementFullBox {
   color: white;
   background-color: rgb(48, 183, 255);
   border-radius: 3px;
-}
+} */
 
 .gridElementHollowBox {
   color: grey;
@@ -28,16 +29,22 @@
   background-color: rgb(44, 43, 43);
 }
 
-.gridElementCreateListSection>Button {
-  width: 100%;
+.gridElementHollowBox:hover {
+  background-color: inherit;
 }
 
+.button {
+  box-shadow: none;
+}
+
+
+
 .gridElementDropdownWrapper {
-  padding: 20px;
+  padding: 10%;
 }
 
 .gridElementCreateListTextField {
-  background-color: rgb(205, 205, 205);
+  background-color: ghostwhite;
 }
 
 .desc {
