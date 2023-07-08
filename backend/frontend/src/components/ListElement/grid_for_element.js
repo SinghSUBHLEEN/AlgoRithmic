@@ -1,4 +1,4 @@
-import { Dropdown, ButtonGroup } from "react-bootstrap";
+import { DropdownButton, Dropdown, ButtonGroup } from "react-bootstrap";
 import "./grid.css";
 import { useState, useEffect } from "react";
 import Badge from "react-bootstrap/Badge";
@@ -11,6 +11,7 @@ import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
 import { incrementEasyCount, incrementMediumCount, incrementHardCount, decrementEasyCount, decrementMediumCount, decrementHardCount, totalHardCount, totalEasyCount, totalMediumCount } from "../../actions/actions";
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -260,54 +261,46 @@ export default function Grid(props) {
                 </td>
                 <td><Button className="custom-button cicular" href={it.link} target="_blanck" variant="light">{it.desc}</Button></td>
                 <td>
-                  <Dropdown as={ButtonGroup}>
-                    <Checkbox
-                      {...label}
-                      icon={<FavoriteBorder />}
-                      checkedIcon={<Favorite />}
-                    />
-                    <Dropdown.Toggle variant="link" id="dropdown-split-basic" />
-                    <Dropdown.Menu className="gridElementDropdownWrapper">
-                      {list.map((itr) => {
-                        return (
-                          <div
-                            onClick={(e) => {
-                              addTolistHandler(e, itr._id, it._id);
-                            }}
-                          >
-                            <Dropdown.Item href="#/action-3">
-                              {itr.listTitle}
-                            </Dropdown.Item>
-                          </div>
-                        );
-                      })}
-
-                      <Form className="gridElementCreateListSection">
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter Name"
-                            className="gridElementCreateListTextField"
-                            onChange={(e) => setName(e.target.value)}
-                          />
-                        </Form.Group>
-
-                        <Button
-                          onClick={createListHandler}
-                          variant="primary"
-                          type="submit"
+                  <DropdownButton as={ButtonGroup} variant="dark" style={{ boxShadow: "none" }} title={<PlaylistAddIcon></PlaylistAddIcon>}>
+                    {list.map((itr) => {
+                      return (
+                        <div
+                          onClick={(e) => {
+                            addTolistHandler(e, itr._id, it._id);
+                          }}
                         >
-                          Create List
-                        </Button>
-                      </Form>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                          <Dropdown.Item href="#/action-3">
+                            {itr.listTitle}
+                          </Dropdown.Item>
+                        </div>
+                      );
+                    })}
+                    <Form className="gridElementCreateListSection">
+                      <Form.Group className="m-3" controlId="formBasicEmail">
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter Name"
+                          className="gridElementCreateListTextField"
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      </Form.Group>
+
+                      <Button
+                        onClick={createListHandler}
+                        variant="primary"
+                        type="submit"
+                        className="mb-3 ml-7"
+                      >
+                        Create List
+                      </Button>
+                    </Form>
+                  </DropdownButton>
                 </td>
               </TableRow>)
             }
           })}
         </TableBody>
-      </Table>
-    </div>
+      </Table >
+    </div >
   );
 }
