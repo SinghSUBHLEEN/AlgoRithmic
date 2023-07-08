@@ -175,6 +175,7 @@ app.post("/api/getProblemsByTag", (req, res) => {
   });
 });
 
+
 app.post('/api/getProblemsByTagAndId', (req, res) => {
   const { tag, token } = req.body;
   const values = { easy: Number, medium: Number, hard: Number };
@@ -191,6 +192,82 @@ app.post('/api/getProblemsByTagAndId', (req, res) => {
   Problem.find({ tag: tag }, (err, data) => {
     if (err) res.status(501).json({ error: "Something went wrong" });
     else {
+      for (let i = 0; i < data.length; i += 1) {
+        const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
+        if (data[i].checkedBy.get(userid)) {
+          if (data[i].difficulty === "Hard" || data[i].difficulty === "hard")
+            values.hard = values.hard + 1;
+          else if (data[i].difficulty === "Medium" || data[i].difficulty === "Medium")
+            values.medium = values.medium + 1;
+          else if (data[i].difficulty === "Easy" || data[i].difficulty === "easy")
+            values.easy = values.easy + 1;
+          obj.flag = true;
+        }
+        if (data[i].difficulty === "Hard" || data[i].difficulty === "hard")
+          totalvalues.hard = totalvalues.hard + 1;
+        else if (data[i].difficulty === "Medium" || data[i].difficulty === "Medium")
+          totalvalues.medium = totalvalues.medium + 1;
+        else if (data[i].difficulty === "Easy" || data[i].difficulty === "easy")
+          totalvalues.easy = totalvalues.easy + 1;
+
+        ans.push(obj);
+      }
+      res.status(201).json({ error: "", arr: ans, count: values, total: totalvalues });
+    }
+  })
+});
+
+app.get("/api/getProblems", (req, res) => {
+  const ans = [{
+    difficulty: String, _id: String, tag: String, desc: String, link: String, flag: Boolean
+  }];
+  const totalvalues = { easy: Number, medium: Number, hard: Number };
+  totalvalues.easy = 0;
+  totalvalues.medium = 0;
+  totalvalues.hard = 0;
+  Problem.find({}, (err, data) => {
+    if (err) res.status(501).json({ error: "Something went wrong" });
+    else {
+      data.sort((a, b) => {
+        return a._id < b._id;
+      })
+      console.log(data);
+      for (let i = 0; i < data.length; i += 1) {
+        const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
+        if (data[i].difficulty === "Hard" || data[i].difficulty === "hard")
+          totalvalues.hard = totalvalues.hard + 1;
+        else if (data[i].difficulty === "Medium" || data[i].difficulty === "Medium")
+          totalvalues.medium = totalvalues.medium + 1;
+        else if (data[i].difficulty === "Easy" || data[i].difficulty === "easy")
+          totalvalues.easy = totalvalues.easy + 1;
+        ans.push(obj);
+      }
+
+    }
+    res.status(201).json({ error: "", arr: ans, total: totalvalues });
+  });
+});
+
+app.post('/api/getProblemsById', (req, res) => {
+  const { token } = req.body;
+  const values = { easy: Number, medium: Number, hard: Number };
+  const totalvalues = { easy: Number, medium: Number, hard: Number };
+  values.easy = totalvalues.easy = 0;
+  values.medium = totalvalues.medium = 0;
+  values.hard = totalvalues.hard = 0;
+  let ispresent = new Array();
+  const userid = jwt.verify(token, process.env.token_secret_key)._id;
+  const ans = [{
+    difficulty: String, _id: String, tag: String, desc: String, link: String, flag: Boolean
+  }];
+  Problem.find({}, (err, data) => {
+    if (err) res.status(501).json({ error: "Something went wrong" });
+    else {
+      data.sort((a, b) => {
+        return a._id < b._id;
+      })
+      console.log(data);
+      // res.status(201).json({ error: "", arr: data, count: values, total: totalvalues });
       for (let i = 0; i < data.length; i += 1) {
         const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
         if (data[i].checkedBy.get(userid)) {

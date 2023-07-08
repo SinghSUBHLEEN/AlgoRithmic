@@ -4,8 +4,10 @@ import { Row, ProgressBar } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import { useState, useEffect } from "react";
 import Grid from "./grid_for_element";
-const ListElement = (props) => {
+import cookie from "js-cookie";
 
+const ListElement = (props) => {
+  const cook = cookie.get("token");
   const [count, setCount] = useState({ easy: 0, medium: 0, hard: 0 });
   const [total, setTotal] = useState({ easy: 0, medium: 0, hard: 0 });
   const [change, setChange] = useState(0);
@@ -44,8 +46,6 @@ const ListElement = (props) => {
                     <div className="cls">
                       <Row>
                         <Col>
-                          <ProgressBar now={(total.easy + total.medium + total.hard) == 0 ? 0 : ((count.easy + count.hard + count.medium) / (total.easy + total.medium + total.hard) * 100)}
-                            label={(total.easy + total.medium + total.hard) == 0 ? 0 : (((count.easy + count.hard + count.medium) / (total.easy + total.medium + total.hard) * 100).toFixed(1)) + '%'} />
                         </Col>
                       </Row>
                     </div>

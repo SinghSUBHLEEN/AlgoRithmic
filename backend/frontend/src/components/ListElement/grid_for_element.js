@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Grid(props) {
   const cook = cookie.get('token');
   const [list, setList] = useState([]);
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
@@ -130,35 +129,36 @@ export default function Grid(props) {
 
   const handleCheck = (event) => {
     if (!cook) {
-      let temp = data;
-      const obj = count;
-      temp[event.target.name].flag = event.target.value;
-      if (!event.target.checked) {
-        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
-          obj.medium = obj.medium - 1;
-        }
+      return;
+      // let temp = data;
+      // const obj = count;
+      // temp[event.target.name].flag = event.target.value;
+      // if (!event.target.checked) {
+      //   if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
+      //     obj.medium = obj.medium - 1;
+      //   }
 
-        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
-          obj.hard = obj.hard - 1;
-        }
-        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
-          obj.easy = obj.easy - 1;
-        }
-      }
-      else {
-        if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
-          obj.medium = obj.medium + 1;
-        }
-        else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
-          obj.hard = obj.hard + 1;
-        }
-        else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
-          obj.easy = obj.easy + 1;
-        }
-      }
+      //   else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
+      //     obj.hard = obj.hard - 1;
+      //   }
+      //   else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
+      //     obj.easy = obj.easy - 1;
+      //   }
+      // }
+      // else {
+      //   if (temp[event.target.name].difficulty === "Medium" || temp[event.target.name].difficulty === "medium") {
+      //     obj.medium = obj.medium + 1;
+      //   }
+      //   else if (temp[event.target.name].difficulty === "Hard" || temp[event.target.name].difficulty === "hard") {
+      //     obj.hard = obj.hard + 1;
+      //   }
+      //   else if (temp[event.target.name].difficulty === "Easy" || temp[event.target.name].difficulty === "easy") {
+      //     obj.easy = obj.easy + 1;
+      //   }
+      // }
 
-      setCount(obj);
-      props.setCount(count);
+      // setCount(obj);
+      // props.setCount(count);
     }
     else {
       let temp = data;
@@ -195,7 +195,6 @@ export default function Grid(props) {
       console.log(event.target.checked);
       temp[event.target.name].flag = event.target.value;
       setCount(obj);
-      props.setCount(count);
       axios.post('/api/handleUpdate', { problemId: temp[event.target.name]._id, token: cook }).then((res) => {
         setData(temp);
         console.log(obj);
