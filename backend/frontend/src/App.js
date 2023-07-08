@@ -10,7 +10,7 @@ import Element from "./components/ListElement/listele";
 import Protected from "./components/protected/Protected";
 import Roadmap from "./components/roadmap/roadmap";
 import Footer from "./components/footer/footer";
-import Problems from "./components/allproblems/problems";
+// import Problems from "./components/allproblems/problems";
 
 export default function App() {
   return (
@@ -24,7 +24,7 @@ export default function App() {
             {/* <Route path="/home" element={<div>fjrnbfenfie</div>}></Route> */}
             {/* <Route exact path='/login' element={<Login />}></Route> */}
             <Route exact path="/" element={<Home />}></Route>
-            <Route exact path="/problems" element={<Problems />}></Route>
+            {/* <Route exact path="/problems" element={<Problems />}></Route> */}
             <Route exact path="/home" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route exact path="/register" element={<Register />}></Route>

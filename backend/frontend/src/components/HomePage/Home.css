@@ -40,3 +40,47 @@
     font-family: 'DM Sans', sans-serif;
     font-size: 2.7rem;
 }
+
+.menu {
+    margin: 0%;
+    padding: 0%;
+    border: 0%;
+    margin-top: 1.7%;
+}
+
+.custom-menu-card {
+    margin-bottom: 10rem;
+}
+
+.custom-line-progress {
+    margin-bottom: 0.4rem;
+    margin-top: 0.4rem;
+    margin-left: 0.4rem;
+    margin-right: 0.4rem;
+
+}
+
+.custom-menu-card-2 {
+    margin-top: 2rem;
+}
+
+.custom-cprogress-container {
+    /* padding-top: 10%; */
+    width: 70%;
+}
+
+.cprogress {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.progress-heading {
+    color: ghostwhite;
+    font-size: 0.8rem;
+    margin-left: 0.7rem;
+    margin-bottom: 0%;
+}
+
+.progress-hard {
+    margin-bottom: 0.5rem;
+}

@@ -5,40 +5,46 @@ import { Container, Card, Row, Col, Stack, ProgressBar } from "react-bootstrap";
 import "./menu.css";
 import { useNavigate } from "react-router-dom";
 import cookie from 'js-cookie';
-import { useSelector } from "react-redux";
-import { totalEasyCount } from "../../actions/actions";
+import { useSelector, useDispatch } from "react-redux";
 import {
     CircularProgressbar,
     CircularProgressbarWithChildren,
     buildStyles
 } from "react-circular-progressbar";
+import { changeMode } from "../../actions/actions";
 import "react-circular-progressbar/dist/styles.css";
 
 
 const Menu = (props) => {
 
+    const dispatch = useDispatch();
+    const currMode = useSelector((state) => state.modeReducer);
     const easyCount = useSelector((state) => state.easyReducer);
     const mediumCount = useSelector((state) => state.mediumReducer);
     const hardCount = useSelector((state) => state.hardReducer);
-
+    const modeReducer = useSelector((state) => state.modeReducer);
     const easyTotal = useSelector((state) => state.totalEasyCount);
     const mediumTotal = useSelector((state) => state.totalMediumCount);
     const hardTotal = useSelector((state) => state.totalHardCount);
 
     const cook = cookie.get('token');
-    const [mode, setMode] = useState(props.defOn);
 
-    useEffect(() => {
-        console.log(props);
-    }, [mode]);
+    const [mode, setMode] = useState((currMode ? "list" : "graph"));
+
+    // useEffect(() => {
+
+    //     console.log(currMode);
+    // }, [mode]);
 
     const handleList = (event) => {
         if (mode === "list") return;
+        dispatch(changeMode());
         setMode("list");
     }
 
     const handleGraph = (event) => {
         if (mode === "graph") return;
+        dispatch(changeMode());
         setMode("graph");
     }
 

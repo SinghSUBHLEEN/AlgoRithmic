@@ -18,6 +18,11 @@ export const incrementHardCount = () => {
 
     }
 }
+export const changeMode = () => {
+    return {
+        type: "changeMode",
+    }
+}
 
 export const decrementEasyCount = () => {
     return {

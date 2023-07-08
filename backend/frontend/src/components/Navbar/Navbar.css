@@ -6,3 +6,7 @@
 .color-nav {
     margin-bottom: 2rem;
 }
+
+.dropdown-toggle::after {
+    display: none !important;
+}

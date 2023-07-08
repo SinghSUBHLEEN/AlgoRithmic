@@ -7,37 +7,17 @@ import axios from "axios";
 import cookie from "js-cookie";
 import Menu from "../HomeMenu/menu";
 import { useSelector, useDispatch } from "react-redux";
+import Graph from "../graphView/graphView";
 
 
 
-const arr = [
-  "Basics",
-  "Arrays and Hashing",
-  "Searching and Sorting",
-  "Binary Search",
-  "Prefix Sum",
-  "Sets and Hashmaps",
-  "Strings",
-  "DFS",
-  "BFS",
-  "Constructive Algorithms",
-  "Stack",
-  "Queue",
-  "Two pointers",
-  "Recursion and Backtracking",
-  "Trees",
-  "Dynamic Programming",
-  "Graphs",
-  "Tries",
-  "Segment trees and BIT",
-  "Bit manipulation",
-  "Greedy",
-];
+const arr = ["Basics", "Searching and Sorting", "Arrays and Hashing", "Strings", "Sets and Hasmaps", "Binary Search", "Two Pointers", "Prefix Sum", "Linked Lists", "Sliding Window", "Stack", "Queue", "Backtracking", "Trees", "Dynamic Programming", "Priority Queue/Heap", "Graphs", "Tries", "Greedy", "Bit Manipulation"];
 
 
 const Home = () => {
 
-  console.log(arr.length);
+
+  const mode = useSelector((state) => state.modeReducer);
 
   const easyCount = useSelector((state) => state.easyReducer);
   const mediumCount = useSelector((state) => state.mediumReducer);
@@ -49,12 +29,12 @@ const Home = () => {
   const fname = cookie.get("fname");
   const lname = cookie.get("lname");
 
-  useEffect(() => {
-    const easy = easyCount;
-    const medium = mediumCount;
-    const hard = hardCount;
-    setCount({ easy: easy, medium: medium, hard: hard });
-  }, [])
+  // useEffect(() => {
+  //   const easy = easyCount;
+  //   const medium = mediumCount;
+  //   const hard = hardCount;
+  //   setCount({ easy: easy, medium: medium, hard: hard });
+  // }, [])
 
   return (
     <>
@@ -66,15 +46,18 @@ const Home = () => {
         <Col md="auto" >
           <Menu defOn={"list"} ></Menu>
         </Col>
-        <Col md="auto">
-          {
-            arr.map((it) => {
-              return <ListElement topic={it} />;
-            })
-          }
-        </Col>
+        {mode ? <Col>{arr.map((it) => {
+          return <ListElement topic={it} />;
+        })}</Col> : <Col><Graph></Graph></Col>}
+        {/* {
+          cook ? (mode ? <Col>{arr.map((it) => {
+            return <ListElement topic={it} />;
+          })}</Col> : <Col><Graph></Graph></Col>) : (!mode ? <Col>{arr.map((it) => {
+            return <ListElement topic={it} />;
+          })}</Col> : <Col><Graph></Graph></Col>)
+        } */}
         <Col md="auto"></Col>
-      </Row>
+      </Row >
     </ >
   );
 };
