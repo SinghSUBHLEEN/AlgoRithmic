@@ -2,7 +2,7 @@ import { React, useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import cookie from 'js-cookie';
 import { useDispatch, useSelector } from "react-redux";
-import { DropdownButton, Dropdown, ButtonGroup, Badge, Button, Form, Navbar, Container, Nav } from "react-bootstrap";
+import { DropdownButton, Dropdown, ButtonGroup, Badge, Button, Form, Navbar, NavDropdown, Container, Nav, Row, Col } from "react-bootstrap";
 import { incrementEasyCount, incrementMediumCount, incrementHardCount, decrementEasyCount, decrementMediumCount, decrementHardCount, totalHardCount, totalEasyCount, totalMediumCount } from "../../actions/actions";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { alpha } from '@mui/material/styles';
@@ -26,6 +26,8 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import DoneIcon from '@mui/icons-material/Done';
 
 const Grid = (props) => {
     const cook = cookie.get('token');
@@ -210,27 +212,66 @@ const Grid = (props) => {
         event.preventDefault();
     }
 
+    const [click, setClick] = useState(0);
+    const handleEasy = () => {
+        if (click === 1)
+            setClick(0);
+        else
+            setClick(1);
+    }
+
+    const handleMedium = () => {
+        if (click === 2)
+            setClick(0);
+        else
+            setClick(2);
+    }
+
+    const handleHard = () => {
+        if (click === 3)
+            setClick(0);
+        else
+            setClick(3);
+    }
+
     return <>
         <div className="table-back">
             <Navbar expand="lg" className="bg-body-tertiary mb-3 rounded" bg="light" >
-                <Container fluid>
-                    <Form className="d-flex" style={{ backgroundColor: "inherit", boxShadow: "none" }}>
-                        <Form.Control
-                            type="search"
-                            placeholder="Search problems"
-                            className="me-2"
-                            aria-label="Search"
-                            onChange={handleInput}
-                        />
-                        <Button variant="primary" style={{ boxShadow: "none" }} onClick={handleSearch}>Search</Button>
-                    </Form>
-                    <Nav
-                        className="me-auto my-2 my-lg-0"
-                        style={{ maxHeight: '100px' }}
-                        navbarScroll
-                    >
+                <Form className="d-flex" style={{ backgroundColor: "inherit", boxShadow: "none", marginLeft: "1rem" }}>
+                    <Form.Control
+                        type="search"
+                        placeholder="Search problems"
+                        className="me-2"
+                        aria-label="Search"
+                        onChange={handleInput}
+                    />
+                    <Button variant="primary" style={{ boxShadow: "none" }} onClick={handleSearch}>Search</Button>
+                </Form>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto" style={{ marginLeft: "33rem" }}>
+                        <NavDropdown title={<>{"Difficulty"}<ArrowDropDownIcon /></>}>
+                            <NavDropdown.Item onClick={handleEasy}>
+                                <Row>
+                                    <Col xs={6}>Easy</Col>
+                                    <Col md="auto">{click === 1 ? <DoneIcon /> : <></>}</Col>
+                                </Row>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={handleMedium}>
+                                <Row>
+                                    <Col xs={6}>Medium</Col>
+                                    <Col md="auto">{click === 2 ? <DoneIcon /> : <></>}</Col>
+                                </Row>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={handleHard}>
+                                <Row>
+                                    <Col xs={6}>Hard</Col>
+                                    <Col md="auto">{click === 3 ? <DoneIcon /> : <></>}</Col>
+                                </Row>
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
-                </Container>
+                </Navbar.Collapse>
             </Navbar>
             <Table
                 className="table table-hover custom-table" variant="dark"
@@ -253,6 +294,12 @@ const Grid = (props) => {
                 <TableBody>
                     {data.map((it, idx) => {
                         if (Object.keys(it).length === 0 || (only !== "" && !it.desc.toLowerCase().startsWith(only)))
+                            return <></>
+                        else if (click === 1 && (it.difficulty === "hard" || it.difficulty === "Hard" || it.difficulty === "medium" || it.difficulty === "Medium"))
+                            return <></>
+                        else if (click === 2 && (it.difficulty === "hard" || it.difficulty === "Hard" || it.difficulty === "easy" || it.difficulty === "Easy"))
+                            return <></>
+                        else if (click === 3 && (it.difficulty === "easy" || it.difficulty === "Easy" || it.difficulty === "medium" || it.difficulty === "Medium"))
                             return <></>
                         else {
                             let badge = "success";

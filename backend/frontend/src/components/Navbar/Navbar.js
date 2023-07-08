@@ -71,7 +71,7 @@ const Navbar = (props) => {
             {cook ? <Nav.Link onClick={mylistF}>{"My Lists"}</Nav.Link> : <></>}
           </Nav>
           <Nav>
-            {props.hide ? <></> : (<><NavDropdown title={<AccountCircleIcon style={{ color: "ghostwhite", marginLeft: "1rem" }}></AccountCircleIcon>} id="collasible-nav-dropdown">
+            {props.hide ? <></> : (<><NavDropdown className="custom-nav-drop" title={<AccountCircleIcon style={{ color: "ghostwhite", marginLeft: "1rem", fontSize: "1.7rem" }}></AccountCircleIcon>} id="collasible-nav-dropdown">
               {cook ? <><NavDropdown.Item onClick={myProfile}>My Profile</NavDropdown.Item><NavDropdown.Divider /></> : <></>}
               {cook ? (
                 <NavDropdown.Item onClick={deleteCookie}>Logout</NavDropdown.Item>
