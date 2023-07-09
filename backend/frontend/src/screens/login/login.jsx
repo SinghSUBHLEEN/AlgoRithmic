@@ -14,7 +14,7 @@ export default function Login() {
   const navigate = useNavigate();
   useEffect(() => {
     if (cook)
-      navigate('/');
+      navigate('/home');
   }, []);
 
   const [data, setData] = useState({ email: "", password: "", rem: 'off' });
@@ -37,7 +37,7 @@ export default function Login() {
         throw (res);
       }
       else {
-        navigate('/')
+        navigate('/home')
         setClick(false);
         setAlert("");
       }
@@ -118,7 +118,7 @@ export default function Login() {
             </Form.Group>
             <Form.Group>
               <Form.Text>{str}
-                <a onClick={handleRegister} className="an"> Create here!</a>
+                <a onClick={handleRegister} className="ana"> Create here!</a>
               </Form.Text>
             </Form.Group>
             {alert !== "" ? <><Alert style={{ backgroundColor: "rgba(203, 0, 0, 0.8)" }} className="m-3" key="danger"  >

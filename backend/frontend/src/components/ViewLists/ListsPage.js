@@ -143,8 +143,8 @@ const ListsPage = () => {
                     }}
                     className={
                       currentId == itr._id
-                        ? "myListLeftSectionItemsColored"
-                        : "myListLeftSectionItems"
+                        ? "myListLeftSectionItemsColored custom-list-elements"
+                        : "myListLeftSectionItems custom-list-elements"
                     }
                   >
                     <div>{itr.listTitle}</div>

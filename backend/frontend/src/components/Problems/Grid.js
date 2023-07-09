@@ -250,7 +250,7 @@ const Grid = (props) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ marginLeft: "33rem" }}>
-                        <NavDropdown title={<>{"Difficulty"}<ArrowDropDownIcon /></>}>
+                        <NavDropdown title={<><span style={{ color: "inherit", fontSize: "1.18rem" }}>Difficulty</span><ArrowDropDownIcon /></>}>
                             <NavDropdown.Item onClick={handleEasy}>
                                 <Row>
                                     <Col xs={6}>Easy</Col>
@@ -319,7 +319,7 @@ const Grid = (props) => {
 
                                 </td>
                                 <td>
-                                    <Badge bg={badge}>{it.difficulty}</Badge>
+                                    <Badge pill bg={badge}>{it.difficulty}</Badge>
                                 </td>
                                 <td><Button className="custom-button cicular" href={it.link} target="_blanck" variant="light">{it.desc}</Button></td>
                                 <td>

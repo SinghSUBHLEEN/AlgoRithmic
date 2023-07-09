@@ -1,7 +1,7 @@
 import { React, useCallback } from "react";
 import "./graphView.css";
 import Nav from "../Navbar/Navbar";
-import { Container } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import ReactFlow, { Controls, Background, MiniMap, ReactFlowProvider, addEdge, useEdgesState, useNodesState } from 'reactflow';
 import 'reactflow/dist/base.css';
 import CustomNode from "./customNode";
@@ -148,7 +148,7 @@ const Graph = () => {
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
     return <>
-        <div style={{ height: "130vh", width: "100%" }} className="m-0 p-0 b-0">
+        <Row style={{ height: "130vh", width: "100%" }} className="m-0 p-0 b-0">
             <ReactFlowProvider>
                 <ReactFlow defaultNodes={nodes} defaultEdges={edges} style={{
                     backgroundColor: "#060606", paddingBottom: "2rem"
@@ -164,7 +164,7 @@ const Graph = () => {
                     <Controls />
                 </ReactFlow>
             </ReactFlowProvider>
-        </div >
+        </Row >
     </>
 }
 

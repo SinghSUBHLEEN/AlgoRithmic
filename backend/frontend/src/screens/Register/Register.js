@@ -17,7 +17,7 @@ export default function Register() {
   const cook = cookie.get('token');
   useEffect(() => {
     if (cook)
-      navigate('/');
+      navigate('/home');
   })
   const [data, setData] = useState({
     lname: "",
@@ -41,7 +41,7 @@ export default function Register() {
         throw (res);
       }
       else {
-        navigate('/')
+        navigate('/home')
         setClick(false);
         setAlert("");
       }
@@ -155,7 +155,7 @@ export default function Register() {
             </Form.Group>
             <Form.Group>
               <Form.Text>{str}
-                <a onClick={loginF} className="an"> Sign in here!</a>
+                <a onClick={loginF} className="ana"> Sign in here!</a>
               </Form.Text>
             </Form.Group>
             {alert !== "" ? <><Alert style={{ backgroundColor: "rgba(203, 0, 0, 0.8)" }} className="m-3" key="danger" variant="danger">

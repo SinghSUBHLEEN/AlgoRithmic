@@ -21,7 +21,7 @@ const Navbar = (props) => {
     // dispatch(incrementMode());
     // dispatch(incrementMode());
     // dispatch(changeMode());
-    navigate('/login');
+    navigate('/');
   }
 
   const cook = cookie.get('token');
@@ -32,7 +32,7 @@ const Navbar = (props) => {
   }
 
   const homeF = () => {
-    navigate('/');
+    navigate('/home');
   }
 
   const roadF = () => {
@@ -49,6 +49,14 @@ const Navbar = (props) => {
     navigate('/problems');
   }
 
+  const landF = () => {
+    // dispatch(changeMode());
+    if (!cook)
+      navigate('/');
+    else
+      navigate('/home');
+  }
+
   const mylistF = () => {
     // dispatch(changeMode());
     navigate('/mylists');
@@ -59,9 +67,9 @@ const Navbar = (props) => {
   }
 
   return (
-    <NavbarB collapseOnSelect expand="lg" sticky="top" className="color-nav" variant="dark" bg='info'>
+    <NavbarB collapseOnSelect expand="lg" sticky="top" className="color-nav" variant="dark">
       <Container>
-        <NavbarB.Brand onClick={homeF} className=".an">Algorithmic</NavbarB.Brand>
+        <NavbarB.Brand onClick={landF} className="an">AlgoRithmic</NavbarB.Brand>
         <NavbarB.Toggle aria-controls="responsive-navbar-nav" />
         <NavbarB.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">

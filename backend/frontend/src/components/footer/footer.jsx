@@ -37,7 +37,7 @@ export default function Footer() {
 
             <div className='text-center p-3 bottom' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
                 <Stack gap={2}>
-                    <Row><Col>© 2020 Copyright:{"  Algorithmic"}</Col></Row>
+                    <Row><Col>© 2020 Copyright:{"  AlgoRithmic"}</Col></Row>
                 </Stack>
             </div>
 

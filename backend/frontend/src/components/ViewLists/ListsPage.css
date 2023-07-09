@@ -106,7 +106,7 @@
   color: rgba(88, 245, 16, 0.719);
 }
 
-.myListLeftSectionBottom > Form {
+.myListLeftSectionBottom>Form {
   background-color: black;
   padding: 1rem;
   border: 1px solid grey;
@@ -121,12 +121,18 @@
   border: 1px solid grey;
   padding: 10px;
 }
+
 .myListLeftSectionItems:hover {
   background-color: rgb(145, 197, 218);
   cursor: pointer;
 }
+
 .myListLeftSectionItemsColored {
   border: 1px solid grey;
   padding: 10px;
   background-color: rgb(0, 183, 255);
+}
+
+.custom-list-elements:hover {
+  background-color: #2a9fd6;
 }

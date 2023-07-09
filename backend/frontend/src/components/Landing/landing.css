@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=Open+Sans&display=swap');
+
+.custom-h1-land {
+    color: ghostwhite;
+    text-align: left;
+    font-weight: bolder;
+    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.custom-practice {
+    justify-content: center;
+    text-align: center;
+    font-weight: 600;
+}
+
+.land-badge {
+    background-color: inherit;
+    border-width: 0.3rem;
+    border-color: #78184A;
+}
+
+.land-badge-1 {
+    background-color: inherit;
+    border-width: 0.3rem;
+    border-color: #5D8AA8;
+}
+
+.land-badge-1:hover {
+    background-color: #5D8AA8;
+    color: ghostwhite;
+    cursor: pointer;
+}
+
+.land-badge-2 {
+    background-color: inherit;
+    border-width: 0.3rem;
+    border-color: #00A86B;
+}
+
+.land-badge-2:hover {
+    background-color: #00A86B;
+    color: ghostwhite;
+    cursor: pointer;
+}
+
+.land-badge:hover {
+    background-color: #78184A;
+    color: ghostwhite;
+    cursor: pointer;
+}
+
+.text {
+    margin-bottom: 0.3rem;
+}
+
+
+.custom-p-land {
+    color: ghostwhite;
+    text-align: left;
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.content {
+    margin-top: 9rem;
+    margin-left: 4.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.card-details {
+    font-size: x-large;
+    color: ghostwhite;
+}

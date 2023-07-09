@@ -28,11 +28,12 @@ form {
     text-align: center;
 }
 
-.an {
+.ana {
     text-decoration: underline;
+    font-size: 1.07rem;
 }
 
-.an:hover {
+.ana:hover {
     cursor: pointer;
 }
 

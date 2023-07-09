@@ -256,7 +256,7 @@ export default function Grid(props) {
 
                 </td>
                 <td>
-                  <Badge bg={badge}>{it.difficulty}</Badge>
+                  <Badge pill bg={badge}>{it.difficulty}</Badge>
                 </td>
                 <td><Button className="custom-button cicular" href={it.link} target="_blanck" variant="light">{it.desc}</Button></td>
                 <td>
