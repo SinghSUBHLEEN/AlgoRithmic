@@ -93,7 +93,7 @@ const Grid = (props) => {
 
 
     const getProblems = () => {
-        axios.get('/api/getProblems').then((res) => {
+        axios.post('/api/getProblems', {}).then((res) => {
             console.log(res.data.arr);
             console.log(res);
             console.log(res.data.arr);

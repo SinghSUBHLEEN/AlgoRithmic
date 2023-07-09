@@ -216,7 +216,7 @@ app.post('/api/getProblemsByTagAndId', (req, res) => {
   })
 });
 
-app.get("/api/getProblems", (req, res) => {
+app.post("/api/getProblems", (req, res) => {
   const ans = [{
     difficulty: String, _id: String, tag: String, desc: String, link: String, flag: Boolean
   }];
