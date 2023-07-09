@@ -33,33 +33,22 @@ const ListElement = (props) => {
   }, [change])
   return (
     <>
-      <Row className="m-0 p-0 b-0">
-        <Accordion variant="success">
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>
-              <Container className="m-0 p-0 b-0">
-                <Row>
-                  <Col>
-                    <h1 className="title">{props.topic}</h1>
-                  </Col>
-                  <Col>
-                    <div className="cls">
-                      <Row>
-                        <Col>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Col>
-                  <Col xs lg={2} md="auto"></Col>
-                </Row>
-              </Container>
-            </Accordion.Header>
-            <Accordion.Body className="rounded-bottom table-back">
-              <Grid top={props.topic} setCount={getCount} setTotal={getTotal} />
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-        {/* </Row> */}
+      <Row className="m-0 p-0 b-0" style={{ textAlign: "center", marginLeft: "auto", marginRight: "auto" }}>
+        <Col>
+          <Accordion variant="success" style={{ width: "78%", marginLeft: "auto", marginRight: "auto" }}>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>
+                <Container className="m-0 p-0 b-0" fluid>
+                  <h1 className="title">{props.topic}</h1>
+                </Container>
+              </Accordion.Header>
+              <Accordion.Body className="rounded-bottom table-back">
+                <Grid top={props.topic} setCount={getCount} setTotal={getTotal} />
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+          {/* </Row> */}
+        </Col>
       </Row>
     </>
   );

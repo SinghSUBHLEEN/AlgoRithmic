@@ -52,14 +52,13 @@ const Menu = (props) => {
 
     return <>
         <Row className="menu">
-            <Col></Col>
             <Col>
-                <Card className="menu-container" border="dark" style={{ width: '18rem' }}>
+                <Card className="menu-container-2" border="dark" style={{ width: 'auto', marginLeft: "auto", marginRight: "auto" }}>
                     <Card.Header >
                         <Container className="menu-heading">Menu</Container>
                     </Card.Header>
                     <Card.Body>
-                        <Card className="m-2 custom-menu-card" border="dark" style={{ width: '15rem', backgroundColor: mode === "list" ? "ghostwhite" : "#262d33" }} onClick={handleList}>
+                        <Card className="b-0 p-0 custom-menu-card-2" border="dark" style={{ width: '15rem', backgroundColor: mode === "list" ? "ghostwhite" : "#262d33", marginLeft: "auto", marginRight: "auto", marginTop: "auto" }} onClick={handleList}>
                             <Card.Header>
                                 <Container>
                                     <Row className="custom-menu" style={{ color: mode === "list" ? "#262d33" : "ghostwhite", fontWeight: "bold" }} >List View</Row>
@@ -72,7 +71,7 @@ const Menu = (props) => {
                                 </Container>
                             </Card.Header>
                         </Card>
-                        <Card className="m-2 custom-menu-card" border="dark" style={{ width: '15rem', backgroundColor: mode === "graph" ? "ghostwhite" : "#262d33" }} onClick={handleGraph}>
+                        <Card className="custom-menu-card-2" border="dark" style={{ width: '15rem', backgroundColor: mode === "graph" ? "ghostwhite" : "#262d33", marginLeft: "auto", marginRight: "auto", marginTop: "3%" }} onClick={handleGraph}>
                             <Card.Header>
                                 <Container>
                                     <Row className="custom-menu" bg="white" style={{ color: mode === "graph" ? "#262d33" : "ghostwhite", fontWeight: "bold" }}>Graph View</Row>
@@ -91,9 +90,8 @@ const Menu = (props) => {
         </Row>
         {cook ? (
             <Row className="menu">
-                <Col></Col>
                 <Col>
-                    <Card className="menu-container2" border="dark" style={{ width: '18rem' }}>
+                    <Card className="menu-container2" border="dark" style={{ width: 'auto', marginTop: "1rem", marginBottom: "1rem" }}>
                         <Card.Header >
                             <Container className="menu-heading">Progress</Container>
                         </Card.Header>
@@ -101,7 +99,7 @@ const Menu = (props) => {
                             {/* <Card className="m-0 b-0 p-0 custom-menu-card" border="dark" style={{ width: '15rem', backgroundColor: "#262d33" }} onClick={handleList}>
 
                             </Card> */}
-                            <Card className="m-0 b-0 p-0 custom-menu-card-2" border="dark" style={{ width: '15rem', backgroundColor: "#262d33" }} onClick={handleList}>
+                            <Card className="b-0 p-0 custom-menu-card-2" border="dark" style={{ width: '15rem', marginLeft: "auto", marginRight: "auto", marginTop: "auto", backgroundColor: "#262d33" }} onClick={handleList}>
                                 <Card.Header className="m-0 b-0 p-0">
                                     <Container className="custom-cprogress-container">
                                         <CircularProgressbar className="cprogress" value={((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)} text={(((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)).toFixed(2) + "%"} styles={buildStyles({

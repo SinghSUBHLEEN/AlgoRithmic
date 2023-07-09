@@ -46,9 +46,10 @@ const Home = () => {
         <Col md="auto" >
           <Menu defOn={"list"} ></Menu>
         </Col>
-        {mode ? <Col>{arr.map((it) => {
+        <Col>{mode ? <>{arr.map((it) => {
           return <ListElement topic={it} />;
-        })}</Col> : <Col><Graph></Graph></Col>}
+        })}</> : <Col lg={30}><Graph></Graph></Col>}
+        </Col>
         {/* {
           cook ? (mode ? <Col>{arr.map((it) => {
             return <ListElement topic={it} />;
@@ -56,8 +57,8 @@ const Home = () => {
             return <ListElement topic={it} />;
           })}</Col> : <Col><Graph></Graph></Col>)
         } */}
-        <Col md="auto"></Col>
-      </Row >
+        {/* <Col md="auto"></Col> */}
+      </Row>
     </ >
   );
 };
