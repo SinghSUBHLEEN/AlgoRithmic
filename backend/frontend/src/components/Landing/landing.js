@@ -28,6 +28,14 @@ const Landing = () => {
         setText("white");
     }
 
+    const handleClickPractice = () => {
+        navigate('/problems');
+    }
+
+    const handleClickRoad = () => {
+        navigate('/home');
+    }
+
     return <>
         <Nav />
         <Container fluid>
@@ -91,12 +99,12 @@ const Landing = () => {
                 <Row>
                     <Col>
                         <Container fluid style={{ textAlign: "right", fontSize: "3rem", marginTop: "2rem" }} >
-                            <CBadge onClick={handleClick} className="land-badge-1" color="info-gradient" shape="rounded-pill"><div className="text" textColor={text}>Start Practicing</div></CBadge>
+                            <CBadge onClick={handleClickPractice} className="land-badge-1" color="info-gradient" shape="rounded-pill"><div className="text" textColor={text}>Start Practicing</div></CBadge>
                         </Container>
                     </Col>
                     <Col>
                         <Container fluid style={{ textAlign: "left", fontSize: "3rem", marginTop: "2rem", marginBottom: "3rem" }} >
-                            <CBadge onClick={handleClick} className="land-badge-2" color="info-gradient" shape="rounded-pill"><div className="text" textColor={text}>View Roadmap</div></CBadge>
+                            <CBadge onClick={handleClickRoad} className="land-badge-2" color="info-gradient" shape="rounded-pill"><div className="text" textColor={text}>View Roadmap</div></CBadge>
                         </Container>
                     </Col>
                 </Row>

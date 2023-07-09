@@ -28,7 +28,7 @@ export default function Footer() {
         <MDBFooter className='custom-footer bg-light text-center text-white'>
             <MDBContainer className='p-4 pb-0'>
                 <Container className='mb-4 p-2'>
-                    <Col><span className="git-icon" onClick={handleGit}><a className="git-link" href="https://github.com/SinghSUBHLEEN/Algorithmic" target="_blanck"><GitHubIcon className="git" /></a></span></Col>
+                    <Col><span className="git-icon" onClick={handleGit}><a className="git-link" href="https://github.com/SinghSUBHLEEN/Algorithmic/tree/master" target="_blanck"><GitHubIcon className="git" /></a></span></Col>
                     <Col className="mt-2">
                         <AlternateEmailIcon className="mail" />project.algorithmic@outlook.com
                     </Col>
