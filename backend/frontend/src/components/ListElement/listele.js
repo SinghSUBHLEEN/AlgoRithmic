@@ -33,7 +33,7 @@ const ListElement = (props) => {
   }, [change])
   return (
     <>
-      <Row className="m-0 p-0 b-0" style={{ textAlign: "center", marginLeft: "auto", marginRight: "auto" }}>
+      <Row className="m-0 p-0 b-0" style={{ marginLeft: "auto", marginRight: "auto" }}>
         <Col>
           <Accordion variant="success" style={{ width: "78%", marginLeft: "auto", marginRight: "auto" }}>
             <Accordion.Item eventKey="0">
