@@ -27,13 +27,12 @@ app.use("/api", checkRoutes);
 app.listen(5000 || process.env.PORT, () => {
   console.log("Listening at port 5000");
 });
-// const app = express();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
-// })
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
+})
 
 app.post('/api/login', (req, res) => {
   const { email, password, rem } = req.body;
