@@ -2,7 +2,7 @@ import { React, useCallback } from "react";
 import "./graphView.css";
 import Nav from "../Navbar/Navbar";
 import { Container, Row } from 'react-bootstrap';
-import ReactFlow, { Controls, Background, MiniMap, ReactFlowProvider, addEdge, useEdgesState, useNodesState } from 'reactflow';
+import ReactFlow, { Controls, Background, MiniMap, ReactFlowProvider, addEdge, useEdgesState, useNodesState, StraightEdge } from 'reactflow';
 import 'reactflow/dist/base.css';
 import CustomNode from "./customNode";
 
@@ -21,7 +21,7 @@ const Graph = () => {
         {
             id: 'Basics',
             data: { name: 'Basics' },
-            position: { x: -200, y: -100 },
+            position: { x: -300, y: -100 },
             type: 'custom',
         },
         {
@@ -51,7 +51,7 @@ const Graph = () => {
         {
             id: 'Binary Search',
             data: { name: 'Binary Search' },
-            position: { x: -600, y: 200 },
+            position: { x: -620, y: 200 },
             type: 'custom',
         },
         {
@@ -64,13 +64,13 @@ const Graph = () => {
         {
             id: 'Linked List',
             data: { name: 'Linked List' },
-            position: { x: 400, y: 200 },
+            position: { x: 300, y: 200 },
             type: 'custom',
         },
         {
             id: 'Prefix Sum',
             data: { name: 'Prefix Sum' },
-            position: { x: 100, y: 200 },
+            position: { x: 0, y: 200 },
             type: 'custom',
         }
         ,
@@ -89,7 +89,7 @@ const Graph = () => {
         {
             id: 'Queue',
             data: { name: 'Queue' },
-            position: { x: 535, y: 350 },
+            position: { x: 450, y: 350 },
             type: 'custom',
         },
         {
@@ -101,25 +101,25 @@ const Graph = () => {
         {
             id: 'Bit Manipulation',
             data: { name: 'Bit Manipulation' },
-            position: { x: -700, y: 650 },
+            position: { x: -600, y: 650 },
             type: 'custom',
         },
         {
             id: 'Trees',
             data: { name: 'Trees' },
-            position: { x: 300, y: 650 },
+            position: { x: 100, y: 650 },
             type: 'custom',
         },
         {
             id: 'Dynamic Programming',
             data: { name: 'Dynamic Programming' },
-            position: { x: -800, y: 800 },
+            position: { x: -750, y: 800 },
             type: 'custom',
         },
         {
             id: 'Tries',
             data: { name: 'Tries' },
-            position: { x: 550, y: 800 },
+            position: { x: 300, y: 800 },
 
             type: 'custom',
         },
@@ -132,13 +132,13 @@ const Graph = () => {
         {
             id: 'Graphs',
             data: { name: 'Graphs' },
-            position: { x: 130, y: 800 },
+            position: { x: -100, y: 800 },
             type: 'custom',
         },
         {
             id: 'Greedy',
             data: { name: 'Greedy' },
-            position: { x: -900, y: 500 },
+            position: { x: -850, y: 500 },
             type: 'custom',
         }
     ];
@@ -149,7 +149,7 @@ const Graph = () => {
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
     return <>
-        <Row fluid style={{ textAlign: "center", height: "63rem", width: "100%" }} className="m-0 p-0 b-0">
+        <Row fluid style={{ textAlign: "center", height: "100vh", width: "100%" }} className="m-0 p-0 b-0">
             <ReactFlowProvider>
                 <ReactFlow defaultNodes={nodes} defaultEdges={edges} style={{
                     backgroundColor: "#060606", paddingBottom: "2rem"
@@ -161,7 +161,6 @@ const Graph = () => {
                     onEdgesChange={onEdgesChange}
                     nodeTypes={nodeTypes}
                 >
-                    <MiniMap style={{ backgroundColor: "ghostwhite" }} zoomable pannable />
                     <Controls />
                 </ReactFlow>
             </ReactFlowProvider>
