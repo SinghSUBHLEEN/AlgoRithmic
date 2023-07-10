@@ -102,18 +102,18 @@ const Menu = (props) => {
                             <Card className="b-0 p-0 custom-menu-card-2" border="dark" style={{ width: '15rem', marginLeft: "auto", marginRight: "auto", marginTop: "auto", backgroundColor: "#262d33" }} onClick={handleList}>
                                 <Card.Header className="m-0 b-0 p-0">
                                     <Container className="custom-cprogress-container">
-                                        <CircularProgressbar className="cprogress" value={((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)} text={(((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)).toFixed(2) + "%"} styles={buildStyles({
+                                        <CircularProgressbar className="cprogress" value={((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)} text={((easyTotal + mediumTotal + hardTotal) != 0 ? (((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)).toFixed(2) : 0) + "%"} styles={buildStyles({
                                             textColor: "ghostwhite",
                                             pathColor: "#2a9fd6"
                                         })} strokeWidth={2.5} />
 
                                     </Container>
                                     <span className="progress-heading">Easy</span>
-                                    <ProgressBar className="custom-line-progress" variant="success" now={(easyCount / easyTotal) * 100} label={(easyCount / easyTotal) * 100 + "%"} />
+                                    <ProgressBar className="custom-line-progress" variant="success" now={easyTotal != 0 ? (((easyCount / easyTotal) * 100).toFixed(2)) : 0} label={(easyTotal != 0 ? (((easyCount / easyTotal) * 100).toFixed(2)) : 0) + "%"} />
                                     <span className="progress-heading">Medium</span>
-                                    <ProgressBar className="custom-line-progress" variant="warning" now={((mediumCount / mediumTotal) * 100).toFixed(2)} label={((mediumCount / mediumTotal) * 100).toFixed(2) + "%"} />
+                                    <ProgressBar className="custom-line-progress" variant="warning" now={(mediumCount != 0 ? ((mediumCount / mediumTotal) * 100).toFixed(2) : 0)} label={(mediumCount != 0 ? ((mediumCount / mediumTotal) * 100).toFixed(2) : 0) + "%"} />
                                     <span className="progress-heading">Hard</span>
-                                    <ProgressBar className="custom-line-progress progress-hard" variant="danger" now={(hardCount / hardTotal) * 100} label={((hardCount / hardTotal) * 100).toFixed(2) + "%"} />
+                                    <ProgressBar className="custom-line-progress progress-hard" variant="danger" now={(hardTotal != 0 ? ((hardCount / hardTotal) * 100).toFixed(2) : 0)} label={(hardTotal != 0 ? ((hardCount / hardTotal) * 100).toFixed(2) : 0) + "%"} />
                                 </Card.Header>
                             </Card>
                         </Card.Body>
