@@ -59,18 +59,18 @@ const Graph = () => {
             data: { name: 'Two Pointers' },
             position: { x: -300, y: 200 },
             type: 'custom',
-        },
-        {
-            id: 'Prefix Sum',
-            data: { name: 'Prefix Sum' },
-            position: { x: 100, y: 200 },
-            type: 'custom',
         }
         ,
         {
             id: 'Linked List',
             data: { name: 'Linked List' },
             position: { x: 400, y: 200 },
+            type: 'custom',
+        },
+        {
+            id: 'Prefix Sum',
+            data: { name: 'Prefix Sum' },
+            position: { x: 100, y: 200 },
             type: 'custom',
         }
         ,
