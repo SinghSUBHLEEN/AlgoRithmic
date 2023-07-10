@@ -158,6 +158,12 @@ app.post("/api/getProblemsByTag", (req, res) => {
   Problem.find({ tag: tag }, (err, data) => {
     if (err) res.status(501).json({ error: "Something went wrong" });
     else {
+      const sortMap = {
+        'Easy': 3,
+        'Medium': 2,
+        'Hard': 1,
+      }
+      data.sort((a, b) => (sortMap[b.difficulty] - sortMap[a.difficulty]));
       for (let i = 0; i < data.length; i += 1) {
         const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
         if (data[i].difficulty === "Hard" || data[i].difficulty === "hard")
@@ -191,6 +197,12 @@ app.post('/api/getProblemsByTagAndId', (req, res) => {
   Problem.find({ tag: tag }, (err, data) => {
     if (err) res.status(501).json({ error: "Something went wrong" });
     else {
+      const sortMap = {
+        'Easy': 3,
+        'Medium': 2,
+        'Hard': 1,
+      }
+      data.sort((a, b) => (sortMap[b.difficulty] - sortMap[a.difficulty]));
       for (let i = 0; i < data.length; i += 1) {
         const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
         if (data[i].checkedBy.get(userid)) {
@@ -227,10 +239,12 @@ app.post("/api/getProblems", (req, res) => {
   Problem.find({}, (err, data) => {
     if (err) res.status(501).json({ error: "Something went wrong" });
     else {
-      data.sort((a, b) => {
-        return a._id < b._id;
-      })
-      console.log(data);
+      const sortMap = {
+        'Easy': 3,
+        'Medium': 2,
+        'Hard': 1,
+      }
+      data.sort((a, b) => (sortMap[b.difficulty] - sortMap[a.difficulty]));
       for (let i = 0; i < data.length; i += 1) {
         const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
         if (data[i].difficulty === "Hard" || data[i].difficulty === "hard")
@@ -262,10 +276,12 @@ app.post('/api/getProblemsById', (req, res) => {
   Problem.find({}, (err, data) => {
     if (err) res.status(501).json({ error: "Something went wrong" });
     else {
-      data.sort((a, b) => {
-        return a._id < b._id;
-      })
-      console.log(data);
+      const sortMap = {
+        'Easy': 3,
+        'Medium': 2,
+        'Hard': 1,
+      }
+      data.sort((a, b) => (sortMap[b.difficulty] - sortMap[a.difficulty]));
       // res.status(201).json({ error: "", arr: data, count: values, total: totalvalues });
       for (let i = 0; i < data.length; i += 1) {
         const obj = { difficulty: data[i].difficulty, _id: data[i]._id, tag: data[i].tag, desc: data[i].desc, link: data[i].link, flag: false };
@@ -331,3 +347,13 @@ app.post('/api/handleUpdate', (req, res) => {
 //     console.log(data);
 //   }
 // });
+
+// const cl = new Map();
+
+// Problem.updateMany({}, { checkedBy: cl }, (err, data) => {
+//   if (err)
+//     console.log(err);
+//   else {
+//     console.log("done");
+//   }
+// })

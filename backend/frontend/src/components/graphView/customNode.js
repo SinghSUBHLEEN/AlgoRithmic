@@ -29,7 +29,7 @@ function CustomNode({ data }) {
                         </div>
                     </div>
 
-                    {data.name !== "Greedy" && data.name !== "Strings" && data.name !== "Sliding Window" && data.name !== "Stack" && data.name !== "Queue" && data.name !== "Tries" && data.name !== "Graphs" ? <Handle type="source" position={Position.Bottom} className="w-16 !bg-teal-500" /> : <></>}
+                    {data.name !== "Dynamic Programming" && data.name !== "Strings" && data.name !== "Sets and Hashmap" && data.name !== "Queue" && data.name !== "Tries" && data.name !== "Graphs" ? <Handle type="source" position={Position.Bottom} className="w-16 !bg-teal-500" /> : <></>}
                     {data.name !== "Basics" ? <Handle type="target" position={Position.Top} className="w-16 !bg-teal-500" /> : <></>}
                 </div>
             </span>
