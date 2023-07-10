@@ -62,7 +62,7 @@ const Graph = () => {
         },
         {
             id: 'Prefix Sum',
-            data: { name: 'Prefix sum' },
+            data: { name: 'Prefix Sum' },
             position: { x: 100, y: 200 },
             type: 'custom',
         }

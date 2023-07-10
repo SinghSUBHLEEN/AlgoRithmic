@@ -67,35 +67,33 @@ const Navbar = (props) => {
   }
 
   return (
-    <Container fluid>
-      <NavbarB collapseOnSelect expand="lg" sticky="top" className="color-nav" variant="dark">
-        <Container>
-          <NavbarB.Brand onClick={landF} className="an">AlgoRithmic</NavbarB.Brand>
-          <NavbarB.Toggle aria-controls="responsive-navbar-nav" />
-          <NavbarB.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link onClick={homeF}>Roadmap</Nav.Link>
-              <Nav.Link onClick={problemF}>Problems</Nav.Link>
-              {/* <Nav.Link onClick={roadF}>Road</Nav.Link> */}
-              {cook ? <Nav.Link onClick={mylistF}>{"My Lists"}</Nav.Link> : <></>}
-            </Nav>
-            <Nav>
-              {props.hide ? <></> : (<><NavDropdown className="custom-nav-drop" title={<AccountCircleIcon style={{ color: "ghostwhite", marginLeft: "1rem", fontSize: "1.7rem" }}></AccountCircleIcon>} id="collasible-nav-dropdown">
-                {cook ? <><NavDropdown.Item onClick={myProfile}>My Profile</NavDropdown.Item><NavDropdown.Divider /></> : <></>}
-                {cook ? (
-                  <NavDropdown.Item onClick={deleteCookie}>Logout</NavDropdown.Item>
-                ) : <NavDropdown.Item onClick={loginF}>Login</NavDropdown.Item>}
-                {cook ? (
-                  <></>
-                ) : <NavDropdown.Item onClick={registerF}>Register</NavDropdown.Item>}
+    <NavbarB collapseOnSelect expand="lg" sticky="top" className="color-nav" variant="dark">
+      <Container>
+        <NavbarB.Brand onClick={landF} className="an">AlgoRithmic</NavbarB.Brand>
+        <NavbarB.Toggle aria-controls="responsive-navbar-nav" />
+        <NavbarB.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link onClick={homeF}>Roadmap</Nav.Link>
+            <Nav.Link onClick={problemF}>Problems</Nav.Link>
+            {/* <Nav.Link onClick={roadF}>Road</Nav.Link> */}
+            {cook ? <Nav.Link onClick={mylistF}>{"My Lists"}</Nav.Link> : <></>}
+          </Nav>
+          <Nav>
+            {props.hide ? <></> : (<><NavDropdown className="custom-nav-drop" title={<AccountCircleIcon style={{ color: "ghostwhite", marginLeft: "1rem", fontSize: "1.7rem" }}></AccountCircleIcon>} id="collasible-nav-dropdown">
+              {cook ? <><NavDropdown.Item onClick={myProfile}>My Profile</NavDropdown.Item><NavDropdown.Divider /></> : <></>}
+              {cook ? (
+                <NavDropdown.Item onClick={deleteCookie}>Logout</NavDropdown.Item>
+              ) : <NavDropdown.Item onClick={loginF}>Login</NavDropdown.Item>}
+              {cook ? (
+                <></>
+              ) : <NavDropdown.Item onClick={registerF}>Register</NavDropdown.Item>}
 
-              </NavDropdown></>)
-              }
-            </Nav>
-          </NavbarB.Collapse>
-        </Container>
-      </NavbarB>
-    </Container>
+            </NavDropdown></>)
+            }
+          </Nav>
+        </NavbarB.Collapse>
+      </Container>
+    </NavbarB>
   );
 };
 
