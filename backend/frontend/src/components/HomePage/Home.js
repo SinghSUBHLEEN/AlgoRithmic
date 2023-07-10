@@ -42,23 +42,17 @@ const Home = () => {
       {/* <h6 className="homePageTitle">
         {cook ? (<MDBContainer fluid><h1 className="welcome">Welcome to Algorithmic {fname},</h1></MDBContainer>) : (<MDBContainer fluid><h1 className="welcome">Welcome to Algorithmic,</h1></MDBContainer>)}
       </h6> */}
-      <Row>
-        <Col md="auto" >
-          <Menu defOn={"list"} ></Menu>
-        </Col>
-        <Col>{mode ? <>{arr.map((it) => {
-          return <ListElement topic={it} />;
-        })}</> : <Col lg={30}><Graph></Graph></Col>}
-        </Col>
-        {/* {
-          cook ? (mode ? <Col>{arr.map((it) => {
+      <Container fluid>
+        <Row>
+          <Col md="auto" >
+            <Menu defOn={"list"} ></Menu>
+          </Col>
+          <Col>{mode ? <>{arr.map((it) => {
             return <ListElement topic={it} />;
-          })}</Col> : <Col><Graph></Graph></Col>) : (!mode ? <Col>{arr.map((it) => {
-            return <ListElement topic={it} />;
-          })}</Col> : <Col><Graph></Graph></Col>)
-        } */}
-        {/* <Col md="auto"></Col> */}
-      </Row>
+          })}</> : <Col lg={30}><Graph></Graph></Col>}
+          </Col>
+        </Row>
+      </Container>
     </ >
   );
 };

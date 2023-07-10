@@ -148,7 +148,7 @@ const Graph = () => {
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
     return <>
-        <Row fluid style={{ textAlign: "center", height: "115vh", width: "100%" }} className="m-0 p-0 b-0">
+        <Row fluid style={{ textAlign: "center", height: "63rem", width: "100%" }} className="m-0 p-0 b-0">
             <ReactFlowProvider>
                 <ReactFlow defaultNodes={nodes} defaultEdges={edges} style={{
                     backgroundColor: "#060606", paddingBottom: "2rem"

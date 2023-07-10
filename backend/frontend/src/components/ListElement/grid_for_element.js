@@ -1,4 +1,4 @@
-import { DropdownButton, Dropdown, ButtonGroup } from "react-bootstrap";
+import { DropdownButton, Dropdown, ButtonGroup, Container } from "react-bootstrap";
 import "./grid.css";
 import { useState, useEffect } from "react";
 import Badge from "react-bootstrap/Badge";
@@ -215,91 +215,93 @@ export default function Grid(props) {
 
 
   return (
-    <div className="table-back">
-      <Table
-        className="table table-hover custom-table" variant="dark"
-        responsive="sm"
-      >
-        <TableHead className="thead-dark">
-          <TableRow>
-            <th class="same-size-col">
-              <h1 className="heading">Status</h1>
-            </th>
-            <th class="same-size-col">
-              <h1 className="heading">Difficulty</h1>
-            </th>
-            <th class="same-size-col">
-              <h1 className="heading">Problem</h1>
-            </th>
-            <th class="same-size-col"></th>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((it, idx) => {
-            if (Object.keys(it).length === 0 || props.top !== it.tag)
-              return <></>
-            else {
-              let badge = "success";
-              if (it.difficulty === "medium" || it.difficulty === "Medium")
-                badge = "warning";
-              else if (it.difficulty === "hard" || it.difficulty === "Hard")
-                badge = "danger";
-              return (<TableRow key={it._id}>
-                <td>
+    <Container fluid>
+      <div className="table-back">
+        <Table
+          className="table table-hover custom-table" variant="dark"
+          responsive="sm"
+        >
+          <TableHead className="thead-dark">
+            <TableRow>
+              <th class="same-size-col">
+                <h1 className="heading">Status</h1>
+              </th>
+              <th class="same-size-col">
+                <h1 className="heading">Difficulty</h1>
+              </th>
+              <th class="same-size-col">
+                <h1 className="heading">Problem</h1>
+              </th>
+              <th class="same-size-col"></th>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((it, idx) => {
+              if (Object.keys(it).length === 0 || props.top !== it.tag)
+                return <></>
+              else {
+                let badge = "success";
+                if (it.difficulty === "medium" || it.difficulty === "Medium")
+                  badge = "warning";
+                else if (it.difficulty === "hard" || it.difficulty === "Hard")
+                  badge = "danger";
+                return (<TableRow key={it._id}>
+                  <td>
 
-                  <Form.Check
-                    type="checkbox"
-                    name={idx}
-                    defaultChecked={it.flag}
-                    onChange={handleCheck}
-                  ></Form.Check>
+                    <Form.Check
+                      type="checkbox"
+                      name={idx}
+                      defaultChecked={it.flag}
+                      onChange={handleCheck}
+                    ></Form.Check>
 
-                </td>
-                <td>
-                  <Badge pill bg={badge}>{it.difficulty}</Badge>
-                </td>
-                <td><Button className="custom-button cicular" href={it.link} target="_blanck" variant="light">{it.desc}</Button></td>
-                <td>
-                  <DropdownButton as={ButtonGroup} variant="dark" style={{ boxShadow: "none" }} title={<PlaylistAddIcon></PlaylistAddIcon>}>
-                    {list.map((itr) => {
-                      return (
-                        <div
-                          onClick={(e) => {
-                            addTolistHandler(e, itr._id, it._id);
-                          }}
+                  </td>
+                  <td>
+                    <Badge pill bg={badge}>{it.difficulty}</Badge>
+                  </td>
+                  <td><Button className="custom-button cicular" href={it.link} target="_blanck" variant="light">{it.desc}</Button></td>
+                  <td>
+                    <DropdownButton as={ButtonGroup} variant="dark" style={{ boxShadow: "none" }} title={<PlaylistAddIcon></PlaylistAddIcon>}>
+                      {list.map((itr) => {
+                        return (
+                          <div
+                            onClick={(e) => {
+                              addTolistHandler(e, itr._id, it._id);
+                            }}
+                          >
+                            <Dropdown.Item href="#/action-3">
+                              {itr.listTitle}
+                            </Dropdown.Item>
+                          </div>
+                        );
+                      })}
+                      <Form className="gridElementCreateListSection">
+                        <Form.Group className="m-3" controlId="formBasicEmail">
+                          <Form.Control
+                            type="text"
+                            placeholder="Enter Name"
+                            className="gridElementCreateListTextField"
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </Form.Group>
+
+                        <Button
+                          onClick={createListHandler}
+                          variant="primary"
+                          type="submit"
+                          className="mb-3 ml-7"
                         >
-                          <Dropdown.Item href="#/action-3">
-                            {itr.listTitle}
-                          </Dropdown.Item>
-                        </div>
-                      );
-                    })}
-                    <Form className="gridElementCreateListSection">
-                      <Form.Group className="m-3" controlId="formBasicEmail">
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter Name"
-                          className="gridElementCreateListTextField"
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </Form.Group>
-
-                      <Button
-                        onClick={createListHandler}
-                        variant="primary"
-                        type="submit"
-                        className="mb-3 ml-7"
-                      >
-                        Create List
-                      </Button>
-                    </Form>
-                  </DropdownButton>
-                </td>
-              </TableRow>)
-            }
-          })}
-        </TableBody>
-      </Table >
-    </div >
+                          Create List
+                        </Button>
+                      </Form>
+                    </DropdownButton>
+                  </td>
+                </TableRow>)
+              }
+            })}
+          </TableBody>
+        </Table >
+      </div >
+    </Container>
   );
 }

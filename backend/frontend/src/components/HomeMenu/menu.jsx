@@ -53,7 +53,7 @@ const Menu = (props) => {
     return <>
         <Row className="menu">
             <Col>
-                <Card className="menu-container-2" border="dark" style={{ width: 'auto', marginLeft: "auto", marginRight: "auto" }}>
+                <Card className="menu-container-2" border="dark" style={{ width: 'auto', marginLeft: "auto", marginRight: "auto", padding: "auto" }}>
                     <Card.Header >
                         <Container className="menu-heading">Menu</Container>
                     </Card.Header>
