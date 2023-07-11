@@ -11,7 +11,7 @@ import Graph from "../graphView/graphView";
 
 
 
-const arr = ["Basics", "Searching and Sorting", "Arrays and Hashing", "Strings", "Sets and Hasmaps", "Binary Search", "Two Pointers", "Prefix Sum", "Linked List", "Sliding Window", "Stack", "Queue", "Backtracking", "Trees", "Dynamic Programming", "Priority Queue/Heap", "Graphs", "Tries", "Greedy", "Bit Manipulation"];
+const arr = ["Basics", "Searching and Sorting", "Arrays and Hashing", "Strings", "Sets and Hasmap", "Binary Search", "Two Pointers", "Prefix Sum", "Linked List", "Sliding Window", "Stack", "Queue", "Backtracking", "Trees", "Dynamic Programming", "Priority Queue/Heap", "Graphs", "Tries", "Greedy", "Bit Manipulation"];
 
 
 const Home = () => {
