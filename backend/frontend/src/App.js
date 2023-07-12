@@ -12,6 +12,7 @@ import Roadmap from "./components/roadmap/roadmap";
 import Footer from "./components/footer/footer";
 import Problems from "./components/Problems/problems";
 import Landing from "./components/Landing/landing";
+import Profile from "./components/profile/profile";
 // import Problems from "./components/allproblems/problems";
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
             <Route exact path="/problems" element={<Problems />}></Route>
             <Route exact path="/home" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route exact path="/profile" element={<Profile />}></Route>
             <Route exact path="/register" element={<Register />}></Route>
             <Route exact path="/mylists" element={<Protected component={MyList} />}></Route>
             <Route exact path="/roadmap" element={<Roadmap></Roadmap>}></Route>
