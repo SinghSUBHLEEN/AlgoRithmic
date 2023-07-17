@@ -245,7 +245,6 @@ const Grid = (props) => {
                         aria-label="Search"
                         onChange={handleInput}
                     />
-                    <Button variant="primary" style={{ boxShadow: "none" }} onClick={handleSearch}>Search</Button>
                 </Form>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

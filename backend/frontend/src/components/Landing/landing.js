@@ -5,8 +5,9 @@ import "./landing.css";
 import { CBadge } from '@coreui/react'
 import { useNavigate } from "react-router-dom";
 import cookie from "js-cookie";
-import { DiCode } from "react-icons/di";
+import { DiCodeBadge } from "react-icons/di";
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
+
 
 const Landing = () => {
 
@@ -61,7 +62,7 @@ const Landing = () => {
                         <Col>{" "}</Col>
                     </Row>
                     <Row style={{ justifyContent: "right", textAlign: "right" }}>
-                        <DiCode style={{ marginLeft: "auto", marginRight: "auto", marginTop: "auto", marginBottom: "auto", fontSize: "10rem", color: "ghostwhite", textAlign: "center" }}></DiCode>
+                        <DiCodeBadge style={{ marginLeft: "auto", marginRight: "auto", marginTop: "10vh", marginBottom: "auto", fontSize: "10rem", color: "ghostwhite", textAlign: "center" }}></DiCodeBadge>
                     </Row>
                 </Col>
                 <Col md="auto"></Col>
