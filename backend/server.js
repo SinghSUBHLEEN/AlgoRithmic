@@ -33,7 +33,7 @@ app.listen(5000 || process.env.PORT, () => {
 const https = require('https');
 
 const handler = async (event, context) => {
-  const url = 'https://algorithmic.onrender.com';
+  const url = 'https://algorithmic.onrender.com/login';
 
   return new Promise((resolve, reject) => {
     const req = https.get(url, (res) => {
