@@ -30,11 +30,35 @@ app.listen(5000 || process.env.PORT, () => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-var cron = require('node-cron');
+const https = require('https');
 
-cron.schedule('* * * * *', () => {
-  console.log('running a task every minute');
-});
+const handler = async (event, context) => {
+  const url = 'https://algorithmic.onrender.com';
+
+  return new Promise((resolve, reject) => {
+    const req = https.get(url, (res) => {
+      if (res.statusCode === 200) {
+        console.log("done");
+        resolve({
+          statusCode: 200,
+          body: 'Server pinged successfully',
+        });
+      } else {
+        reject(
+          new Error(`Server ping failed with status code: ${res.statusCode}`)
+        );
+      }
+    });
+
+    req.on('error', (error) => {
+      reject(error);
+    });
+
+    req.end();
+  });
+};
+
+setInterval(handler, 600000);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
