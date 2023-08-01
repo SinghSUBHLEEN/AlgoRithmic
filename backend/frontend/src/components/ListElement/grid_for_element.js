@@ -1,4 +1,4 @@
-import { DropdownButton, Dropdown, ButtonGroup, Container } from "react-bootstrap";
+import { DropdownButton, Dropdown, ButtonGroup, Container, Row } from "react-bootstrap";
 import "./grid.css";
 import { useState, useEffect } from "react";
 import Badge from "react-bootstrap/Badge";
@@ -15,11 +15,14 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { Dna } from 'react-loader-spinner';
+
 export default function Grid(props) {
   const cook = cookie.get('token');
   const [list, setList] = useState([]);
   const [name, setName] = useState("");
 
+  const [load, setLoad] = useState(true);
   const dispatch = useDispatch();
 
   const fetchLists = async () => {
@@ -87,6 +90,7 @@ export default function Grid(props) {
       console.log(res);
       console.log(res.data.arr);
       setData(res.data.arr);
+      setLoad(false);
       props.setTotal(res.data.total);
     }).catch(err => console.log(err))
   }
@@ -96,6 +100,7 @@ export default function Grid(props) {
       console.log(res);
       setCount(res.data.count);
       setData(res.data.arr);
+      setLoad(false);
       props.setTotal(res.data.total);
       let h = res.data.total.hard, m = res.data.total.medium, e = res.data.total.easy;
       while (h > 0) {
@@ -217,7 +222,14 @@ export default function Grid(props) {
   return (
     <Container fluid>
       <div className="table-back">
-        <Table
+        {load ? <Row><Dna
+          visible={true}
+          height="90"
+          width="80"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        /></Row> : <Table
           className="table table-hover custom-table" variant="dark"
           responsive="sm"
         >
@@ -300,7 +312,7 @@ export default function Grid(props) {
               }
             })}
           </TableBody>
-        </Table >
+        </Table >}
       </div >
     </Container>
   );

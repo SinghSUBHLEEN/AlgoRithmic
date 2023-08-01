@@ -28,6 +28,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DoneIcon from '@mui/icons-material/Done';
+import { Dna } from 'react-loader-spinner';
 
 const Grid = (props) => {
     const cook = cookie.get('token');
@@ -36,6 +37,7 @@ const Grid = (props) => {
     const [list, setList] = useState([]);
     const [name, setName] = useState("");
     const [page, setPage] = useState(0);
+    const [load, setLoad] = useState(true);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const dispatch = useDispatch();
 
@@ -98,6 +100,7 @@ const Grid = (props) => {
             console.log(res);
             console.log(res.data.arr);
             setData(res.data.arr);
+            setLoad(false);
         }).catch(err => console.log(err))
     }
 
@@ -105,6 +108,7 @@ const Grid = (props) => {
         axios.post('/api/getProblemsById', { token: cook }).then((res) => {
             console.log(res.data.arr);
             setData(res.data.arr);
+            setLoad(false);
             console.log(data);
             let h = res.data.total.hard, m = res.data.total.medium, e = res.data.total.easy;
             while (h > 0) {
@@ -272,7 +276,14 @@ const Grid = (props) => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Table
+            {load ? <Row><Dna
+                visible={true}
+                height="110"
+                width="100"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
+            /></Row> : <Table
                 className="table table-hover custom-table" variant="dark"
                 responsive="sm"
             >
@@ -361,7 +372,7 @@ const Grid = (props) => {
                         }
                     })}
                 </TableBody>
-            </Table >
+            </Table >}
         </div >
     </>
 }

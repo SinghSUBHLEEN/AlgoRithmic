@@ -16,13 +16,11 @@ const Landing = () => {
 
     const [text, setText] = useState("#78184A");
 
-    useEffect(() => {
-        if (cook)
-            navigate('/home');
-    }, []);
-
     const handleClick = () => {
-        navigate('/login')
+        if (!cook)
+            navigate('/login');
+        else
+            navigate('/home');
     }
 
     const handleMouse = () => {
@@ -53,7 +51,8 @@ const Landing = () => {
                     </Row>
                     <Row>
                         <Container fluid style={{ textAlign: "left", fontSize: "3rem", marginTop: "2rem" }} >
-                            <CBadge onClick={handleClick} className="land-badge" color="info-gradient" shape="rounded-pill"><div className="text" textColor={text}>Sign in</div></CBadge>
+
+                            <CBadge onClick={handleClick} className="land-badge" color="info-gradient" shape="rounded-pill"><div className="text" textColor={text}>{cook ? "Home" : "Sign in"}</div></CBadge>
                         </Container>
                     </Row>
                 </Col>

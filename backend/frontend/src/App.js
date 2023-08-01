@@ -13,6 +13,7 @@ import Footer from "./components/footer/footer";
 import Problems from "./components/Problems/problems";
 import Landing from "./components/Landing/landing";
 import Profile from "./components/profile/profile";
+import Notfound from "./components/Notfound/Notfound";
 // import Problems from "./components/allproblems/problems";
 
 export default function App() {
@@ -34,7 +35,7 @@ export default function App() {
             <Route exact path="/register" element={<Register />}></Route>
             <Route exact path="/mylists" element={<Protected component={MyList} />}></Route>
             <Route exact path="/roadmap" element={<Roadmap></Roadmap>}></Route>
-            <></>
+            <Route path='*' element={<Notfound></Notfound>}></Route>
           </Routes>
         </main>
       </BrowserRouter>

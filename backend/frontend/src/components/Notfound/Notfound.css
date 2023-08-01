@@ -1,0 +1,11 @@
+.page-head {
+    font-size: x-large;
+    font-weight: bold;
+    color: #bcbec2;
+}
+
+.page-body {
+    font-size: large;
+    width: 40%;
+    color: #bcbec2;
+}

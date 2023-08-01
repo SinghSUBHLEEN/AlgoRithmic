@@ -51,10 +51,7 @@ const Navbar = (props) => {
 
   const landF = () => {
     // dispatch(changeMode());
-    if (!cook)
-      navigate('/');
-    else
-      navigate('/home');
+    navigate('/');
   }
 
   const mylistF = () => {
@@ -68,7 +65,7 @@ const Navbar = (props) => {
 
   return (
     <>
-      <NavbarB collapseOnSelect expand="lg" sticky="top" className="color-nav fefefaf" variant="dark">
+      <NavbarB collapseOnSelect expand="sm" sticky="top" className="color-nav fefefaf" variant="dark">
         <Container>
           <NavbarB.Brand onClick={landF} className="an fefefaf">AlgoRithmic</NavbarB.Brand>
           <NavbarB.Toggle aria-controls="responsive-navbar-nav" />
@@ -93,6 +90,7 @@ const Navbar = (props) => {
               }
             </Nav>
           </NavbarB.Collapse>
+
         </Container>
       </NavbarB>
     </>
