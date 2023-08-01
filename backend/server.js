@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-require("dotenv").config();
+require('../process_env');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookie = require("cookie-parser");

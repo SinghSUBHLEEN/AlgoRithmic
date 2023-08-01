@@ -1,6 +1,0 @@
-.env
-/backend/dotenv
-/backend/.env
-./backend/.env
-.env
-/backend/*.env
