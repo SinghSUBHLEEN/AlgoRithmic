@@ -63,7 +63,7 @@ console.log(process.env.DB_username);
 setInterval(handler, 600000);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, "./frontend/build/index.html"));
+  res.sendFile(path.join(__dirname, "./backend/frontend/build/index.html"));
 })
 
 app.post('/api/login', (req, res) => {
