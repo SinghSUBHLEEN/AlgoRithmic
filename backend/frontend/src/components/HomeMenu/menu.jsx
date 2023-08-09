@@ -99,7 +99,7 @@ const Menu = (props) => {
                             {/* <Card className="m-0 b-0 p-0 custom-menu-card" border="dark" style={{ width: '15rem', backgroundColor: "#262d33" }} onClick={handleList}>
 
                             </Card> */}
-                            <Card className="b-0 p-0 custom-menu-card-2" border="dark" style={{ width: '15rem', marginLeft: "auto", marginRight: "auto", marginTop: "auto", backgroundColor: "#262d33" }} onClick={handleList}>
+                            <Card className="b-0 p-0 custom-menu-card-21" border="dark" style={{ width: '15rem', marginLeft: "auto", marginRight: "auto", marginTop: "auto", backgroundColor: "#262d33" }}>
                                 <Card.Header className="m-0 b-0 p-0">
                                     <Container className="custom-cprogress-container">
                                         <CircularProgressbar className="cprogress" value={((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)} text={((easyTotal + mediumTotal + hardTotal) != 0 ? (((easyCount + mediumCount + hardCount) * 100) / (easyTotal + mediumTotal + hardTotal)).toFixed(2) : 0) + "%"} styles={buildStyles({
