@@ -252,7 +252,7 @@ const Grid = (props) => {
                 </Form>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto" style={{ marginLeft: "33rem" }}>
+                    <Nav float="left" className="ml-auto" >
                         <NavDropdown title={<><span style={{ color: "inherit", fontSize: "1.18rem" }}>Difficulty</span><ArrowDropDownIcon /></>}>
                             <NavDropdown.Item onClick={handleEasy}>
                                 <Row>
