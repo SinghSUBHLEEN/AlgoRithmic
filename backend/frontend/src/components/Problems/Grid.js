@@ -240,7 +240,7 @@ const Grid = (props) => {
 
     return <>
         <div className="table-back">
-            <Navbar expand="lg" className="bg-body-tertiary mb-3 rounded" bg="light" >
+            <Navbar expand="sm" className="bg-body-tertiary mb-3 rounded" bg="light" >
                 <Form className="d-flex" style={{ backgroundColor: "inherit", boxShadow: "none", marginLeft: "1rem" }}>
                     <Form.Control
                         type="search"

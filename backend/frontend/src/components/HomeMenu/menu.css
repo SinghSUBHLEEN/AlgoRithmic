@@ -29,6 +29,10 @@
     margin-right: auto;
 }
 
+.custom-menu-card-2:hover {
+    cursor: pointer;
+}
+
 .custom-cprogress-container {
     /* padding-top: 10%; */
     width: 70%;

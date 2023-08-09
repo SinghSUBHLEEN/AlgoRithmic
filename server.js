@@ -58,7 +58,6 @@ const handler = async (event, context) => {
   });
 };
 
-console.log(process.env.DB_username);
 
 setInterval(handler, 600000);
 
